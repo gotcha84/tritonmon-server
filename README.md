@@ -1,4 +1,0 @@
-tritonmon-server
-================
-
-Tritonmon Server

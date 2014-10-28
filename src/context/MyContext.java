@@ -17,7 +17,7 @@ public class MyContext implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent arg0) {
 		sshToServer();
-		initDB();
+//		initDB();
 		
 		System.out.println("context initialized");
 	}

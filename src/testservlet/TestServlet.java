@@ -24,10 +24,10 @@ public class TestServlet {
 		String result = "result: ";
 		try {
 			while(rs.next()) {
-				result += rs.getString("pokemon");
+				result += rs.getString("name");
 			}
 		} catch (SQLException e) {
-			result += "why the fuck isn't this changing" + e.toString();
+			result += "SQLException<br />" + e.toString();
 		}
 		Gson gson = new GsonBuilder().create();
 		return gson.toJson(result);

@@ -2,7 +2,7 @@
     <wb-module deploy-name="Tritonmon">
         <wb-resource deploy-path="/" source-path="/" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Tritonmon"/>
-        <property name="java-output-path" value="/Tritonmon/WEB-INF/classes"/>
+        <property name="context-root" value="tritonmon-server"/>
+        <property name="java-output-path" value="/tritonmon-server/WEB-INF/classes"/>
     </wb-module>
 </project-modules>

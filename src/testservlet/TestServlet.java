@@ -27,7 +27,7 @@ public class TestServlet {
 				result += rs.getString("pokemon");
 			}
 		} catch (SQLException e) {
-			result += e.toString();
+			result += "why the fuck isn't this changing" + e.toString();
 		}
 		Gson gson = new GsonBuilder().create();
 		return gson.toJson(result);

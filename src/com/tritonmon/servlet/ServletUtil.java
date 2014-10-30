@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServletUtil {
 	
-	public String getJSON(String query) {
+	public static String getJSON(String query) {
 		
 		ResultSet rs = MyContext.dbConn.query(query);
 		
@@ -27,7 +27,7 @@ public class ServletUtil {
 		return result;
 	}
 	
-	public List<String> parseWhereCondition(String column, String value) {
+	public static String parseWhereCondition(String column, String value) {
 		List<String> columnList = Lists.newArrayList(column.split(","));
 		List<String> valueList = Lists.newArrayList(value.split(","));
 		

@@ -8,9 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.tritonmon.database.ResultSetParser;
 
 import context.MyContext;
@@ -20,7 +17,7 @@ public class TestServlet {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getJSON() throws JSONException {
+	public String getJSON() {
 		String query = "SELECT * FROM pokemon;";
 		ResultSet rs = MyContext.dbConn.query(query);
 		
@@ -31,7 +28,7 @@ public class TestServlet {
 			result += "SQLException<br />" + e.toString();
 		}
 		
-		return new JSONObject(result).toString(2);
+		return result;
 	}
 	
 }

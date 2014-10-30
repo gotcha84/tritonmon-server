@@ -10,6 +10,12 @@ import javax.ws.rs.core.MediaType;
 public class Pokemon {
 
 	@GET
+	@Path("/hello")
+	public String test() {
+		return "test";
+	}
+	
+	@GET
 	@Path("/table={table}")
 	public String getAll(@PathParam("table") String table) {
 		String query = "SELECT * FROM "+table+";";

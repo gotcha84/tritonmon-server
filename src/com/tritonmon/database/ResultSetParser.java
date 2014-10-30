@@ -8,19 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.tritonmon.context.MyContext;
 
 public class ResultSetParser {
 	
 	public static String toJSONString(ResultSet rs) throws SQLException {
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(parse(rs));
+		return MyContext.gson.toJson(parse(rs));
 	}
 	
 	public static String toJSONString(List<Map<String, Object>> data) {
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(data);
+		return MyContext.gson.toJson(data);
 	}
 	
 	private static List<Map<String, Object>> parse(ResultSet rs) throws SQLException {

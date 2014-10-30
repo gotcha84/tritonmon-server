@@ -3,6 +3,8 @@ package com.tritonmon.context;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -10,9 +12,13 @@ import com.tritonmon.database.DBConnection;
 
 public class MyContext implements ServletContextListener {
 
+	public static Gson gson;
+	
 	public static DBConnection dbConn;
 	
 	public void contextInitialized(ServletContextEvent arg0) {
+		gson = new GsonBuilder().create();
+		
 //		sshToServer();
 		
 		dbConn = new DBConnection();

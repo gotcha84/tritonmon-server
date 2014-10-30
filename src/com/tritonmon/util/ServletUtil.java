@@ -1,4 +1,4 @@
-package com.tritonmon.servlet;
+package com.tritonmon.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -8,8 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.tritonmon.database.ResultSetParser;
 
 import context.MyContext;
 
@@ -19,18 +18,17 @@ public class TestServlet {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getJSON() {
-		ResultSet rs = MyContext.dbConn.query("SELECT * FROM pokemon WHERE name='charmander';");
+		String query = "SELECT * FROM pokemon;";
+		ResultSet rs = MyContext.dbConn.query(query);
 		
-		String result = "result: ";
+		String result = "This string isn't being updated...";
 		try {
-			while(rs.next()) {
-				result += rs.getString("name");
-			}
+			result = ResultSetParser.toJSONString(rs);
 		} catch (SQLException e) {
 			result += "SQLException<br />" + e.toString();
 		}
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(result);
+		
+		return result;
 	}
 	
 }

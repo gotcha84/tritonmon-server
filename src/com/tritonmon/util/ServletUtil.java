@@ -3,10 +3,8 @@ package com.tritonmon.util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
-
-import context.MyContext;
-
 import com.google.common.collect.Lists;
 
 import java.util.List;

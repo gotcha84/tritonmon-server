@@ -1,4 +1,4 @@
-package context;
+package com.tritonmon.context;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -13,7 +13,7 @@ public class MyContext implements ServletContextListener {
 	public static DBConnection dbConn;
 	
 	public void contextInitialized(ServletContextEvent arg0) {
-		sshToServer();
+//		sshToServer();
 		
 		dbConn = new DBConnection();
 		dbConn.init();

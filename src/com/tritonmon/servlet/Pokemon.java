@@ -8,8 +8,15 @@ import javax.ws.rs.core.MediaType;
 
 import com.tritonmon.util.ServletUtil;
 
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 public class Pokemon {
+	
+	@GET
+	@Path("/hello")
+	public String test() {
+		return "hello world";
+	}
 	
 	@GET
 	@Path("/table={table}")

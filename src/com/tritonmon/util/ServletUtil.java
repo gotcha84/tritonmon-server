@@ -2,12 +2,11 @@ package com.tritonmon.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
-import com.google.common.collect.Lists;
-
-import java.util.List;
 
 public class ServletUtil {
 	
@@ -37,6 +36,5 @@ public class ServletUtil {
 		}
 		
 		return condition.substring(0, condition.lastIndexOf("AND"));
-		
 	}
 }

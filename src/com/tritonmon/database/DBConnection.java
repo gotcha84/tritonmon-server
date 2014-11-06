@@ -46,12 +46,21 @@ public class DBConnection {
 		}
 	}
 	
-	public ResultSet query(String query){
+	public ResultSet query(String query) {
 		try {
 			return mStatement.executeQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public int update(String update) {
+		try {
+			return mStatement.executeUpdate(update);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
 		}
 	}
 }

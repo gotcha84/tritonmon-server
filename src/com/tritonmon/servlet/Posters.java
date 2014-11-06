@@ -15,8 +15,8 @@ public class Posters {
 	
 	@POST
 	public Response test2() {
-		String query = "INSERT INTO testing VALUES(1, hihi)";
-		ServletUtil.getJSON(query);
-		return Response.status(200).entity(query).build();
+		String update = "INSERT INTO testing VALUES(1, hihi)";
+		ServletUtil.updateJSON(update);
+		return Response.status(200).entity(update).build();
 	}
 }

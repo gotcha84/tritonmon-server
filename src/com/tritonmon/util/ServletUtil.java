@@ -24,6 +24,10 @@ public class ServletUtil {
 		return result;
 	}
 	
+public static void updateJSON(String update) {
+		int rs = MyContext.dbConn.update(update);
+	}
+	
 	public static String parseWhereCondition(String column, String value) {
 		List<String> columnList = Lists.newArrayList(column.split(","));
 		List<String> valueList = Lists.newArrayList(value.split(","));

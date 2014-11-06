@@ -29,7 +29,7 @@ public class ServletUtil {
 	}
 
 	public static String parseSetCondition(String column, String value) {
-		return parseCondition(column, value, ",");
+		return parseCondition(column, value, " , ");
 	}
 	
 	public static String parseWhereCondition(String column, String value) {

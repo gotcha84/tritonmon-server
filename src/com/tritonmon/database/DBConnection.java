@@ -60,7 +60,7 @@ public class DBConnection {
 			return mStatement.executeUpdate(update);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
+			return -1;
 		}
 	}
 }

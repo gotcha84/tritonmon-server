@@ -36,7 +36,7 @@ public class Pokemon {
 	@Path("/table={table}/column={column}/value={value}")
 	public String getByColumnValue(@PathParam("table") String table, @PathParam("column") String column, 
 			@PathParam("value") String value) {
-		String query = "SELECT * FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value);
+		String query = "SELECT * FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value)+";";
 		return ServletUtil.getJSON(query);
 	}
 	
@@ -44,7 +44,7 @@ public class Pokemon {
 	@Path("/table={table}/attribute={attribute}/column={column}/value={value}")
 	public String getAttributeByColumnValue(@PathParam("table") String table, @PathParam("attribute") String attribute, 
 			@PathParam("column") String column, @PathParam("value") String value) {
-		String query = "SELECT "+attribute+" FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value);
+		String query = "SELECT "+attribute+" FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value)+";";
 		return ServletUtil.getJSON(query);
 	}
 	

@@ -17,6 +17,6 @@ public class Posters {
 	public Response test2() {
 		String update = "INSERT INTO testing VALUES(1, hihi)";
 		int rs = ServletUtil.updateJSON(update);
-		return Response.status(rs).entity(update).build();
+		return Response.status(10).entity(update).build();
 	}
 }

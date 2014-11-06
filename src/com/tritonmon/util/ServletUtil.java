@@ -27,8 +27,16 @@ public class ServletUtil {
 	public static int updateJSON(String update) {
 		return MyContext.dbConn.update(update);	
 	}
+
+	public static String parseSetCondition(String column, String value) {
+		return parseCondition(column, value, ",");
+	}
 	
 	public static String parseWhereCondition(String column, String value) {
+		return parseCondition(column, value, " AND ");
+	}
+	
+	private static String parseCondition(String column, String value, String joiner) {
 		List<String> columnList = Lists.newArrayList(column.split(","));
 		List<String> valueList = Lists.newArrayList(value.split(","));
 		
@@ -36,9 +44,10 @@ public class ServletUtil {
 		// handle case where just one or zero column/value
 		String condition = "";
 		for (int i = 0; i < columnList.size(); i++) {
-			condition += columnList.get(i)+"="+valueList.get(i)+" AND ";
+			condition += columnList.get(i)+"="+valueList.get(i)+joiner;
 		}
 		
-		return condition.substring(0, condition.lastIndexOf("AND"));
+		return condition.substring(0, condition.lastIndexOf(joiner));
 	}
+	
 }

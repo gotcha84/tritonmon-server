@@ -43,7 +43,7 @@ public class Posters {
 	public Response update(@PathParam("table") String table, @PathParam("setcolumn") String setcolumn, 
 			@PathParam("setvalue") String setvalue, @PathParam("column") String column,
 			@PathParam("value") String value) {
-		String query = "UPDATE "+table+" SET "+ServletUtil.parseWhereCondition(setcolumn, setvalue)+ " WHERE " + 
+		String query = "UPDATE "+table+" SET "+ServletUtil.parseSetCondition(setcolumn, setvalue)+"WHERE"+ 
 			ServletUtil.parseWhereCondition(column, value)+";";
 		int rs = ServletUtil.updateJSON(query);
 		if (rs != 0) {

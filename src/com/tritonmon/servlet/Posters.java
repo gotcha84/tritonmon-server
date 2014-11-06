@@ -14,6 +14,7 @@ import com.tritonmon.util.ServletUtil;
 public class Posters {
 	
 	@POST
+	@Path("/hihi")
 	public Response test2() {
 		String update = "INSERT INTO testing VALUES(1, \"hihi\");";
 		int rs = ServletUtil.updateJSON(update);
@@ -25,8 +26,8 @@ public class Posters {
 	}
 	
 	@POST
-	@Path("/insert/table={table}/value={values}")
-	public Response insert(@PathParam("table") String table, @PathParam("valus") String value) {
+	@Path("/insert/table={table}/value={value}")
+	public Response insert(@PathParam("table") String table, @PathParam("value") String value) {
 		String query = "INSERT INTO "+table+" VALUES("+value+");";
 		int rs = ServletUtil.updateJSON(query);
 		if (rs != 0) {

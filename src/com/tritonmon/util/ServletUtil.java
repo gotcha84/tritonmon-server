@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import com.google.common.collect.Lists;
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
@@ -24,10 +26,19 @@ public class ServletUtil {
 		return result;
 	}
 	
-	public static int updateJSON(String update) {
-		return MyContext.dbConn.update(update);	
+	public static Response updateJSON(String query) {
+		int rs =  MyContext.dbConn.update(query);
+		if (rs != 0) {
+			return Response.status(rs).entity(query).build();
+		} else {
+			return null;
+		}
 	}
-
+	
+	public static String wrapInString(String value) {
+		return "\""+value+"\"";
+	}
+ 
 	public static String parseSetCondition(String column, String value) {
 		return parseCondition(column, value, " , ");
 	}

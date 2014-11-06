@@ -16,25 +16,15 @@ public class Posters {
 	@POST
 	@Path("/hihi")
 	public Response test2() {
-		String update = "INSERT INTO testing VALUES(1, \"hihi\");";
-		int rs = ServletUtil.updateJSON(update);
-		if (rs != 0) {
-			return Response.status(rs).entity(update).build();
-		} else {
-			return null;
-		}
+		String query = "INSERT INTO testing VALUES(1, \"hihi\");";
+		return ServletUtil.updateJSON(query);
 	}
 	
 	@POST
 	@Path("/insert/table={table}/value={value}")
 	public Response insert(@PathParam("table") String table, @PathParam("value") String value) {
 		String query = "INSERT INTO "+table+" VALUES("+value+");";
-		int rs = ServletUtil.updateJSON(query);
-		if (rs != 0) {
-			return Response.status(rs).entity(query).build();
-		} else {
-			return null;
-		}
+		return ServletUtil.updateJSON(query);
 	}
 	
 	@POST
@@ -45,11 +35,17 @@ public class Posters {
 			@PathParam("value") String value) {
 		String query = "UPDATE "+table+" SET "+ServletUtil.parseSetCondition(setcolumn, setvalue)+" WHERE "+ 
 			ServletUtil.parseWhereCondition(column, value)+";";
-		int rs = ServletUtil.updateJSON(query);
-		if (rs != 0) {
-			return Response.status(rs).entity(query).build();
-		} else {
-			return null;
-		}
+		return ServletUtil.updateJSON(query);
 	}
+	
+	// adds new user
+	@POST
+	@Path("/adduser/{username}/{password}/{gender}/{hometown}")
+	public Response addNewUser(@PathParam("username") String username, @PathParam("password") String password,
+			@PathParam("gender") String gender, @PathParam("hometown") String hometown) {
+		String query = "INSERT INTO users (username, password, gender, hometown) VALUES("+ServletUtil.wrapInString(username)+","
+			+ServletUtil.wrapInString(password)+","+ServletUtil.wrapInString(gender)+","+ServletUtil.wrapInString(hometown)+");";
+		return ServletUtil.updateJSON(query);
+	}
+	
 }

@@ -24,8 +24,8 @@ public class ServletUtil {
 		return result;
 	}
 	
-public static void updateJSON(String update) {
-		int rs = MyContext.dbConn.update(update);
+	public static int updateJSON(String update) {
+		return MyContext.dbConn.update(update);	
 	}
 	
 	public static String parseWhereCondition(String column, String value) {

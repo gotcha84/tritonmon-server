@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import com.tritonmon.util.ServletUtil;
 
 @Path("/hihi")
-@Consumes(MediaType.TEXT_PLAIN)
+@Produces(MediaType.TEXT_PLAIN)
 public class Posters {
 	
 	@POST

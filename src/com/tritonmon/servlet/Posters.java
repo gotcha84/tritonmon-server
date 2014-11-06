@@ -1,5 +1,6 @@
 package com.tritonmon.servlet;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,7 +10,7 @@ import javax.ws.rs.core.Response;
 import com.tritonmon.util.ServletUtil;
 
 @Path("/hihi")
-@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.TEXT_PLAIN)
 public class Posters {
 	
 	@POST

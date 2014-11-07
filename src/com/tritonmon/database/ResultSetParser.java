@@ -14,10 +14,10 @@ public class ResultSetParser {
 	
 	public static String toJSONString(ResultSet rs) throws SQLException {
 		List<Map<String, Object>> parsed = parse(rs);
-		if (parsed == null) {
-			return null;
+		if (parsed.isEmpty()) {
+			return "";
 		} else {
-			return MyContext.gson.toJson(parsed);
+			return MyContext.gson.toJson(parse(rs));
 		}
 	}
 	
@@ -44,9 +44,6 @@ public class ResultSetParser {
 	    	}
 	    	rows.add(row);
 	    }
-		if (rows.isEmpty()) {
-			return null;
-		}
 		return rows;
 	}
 	

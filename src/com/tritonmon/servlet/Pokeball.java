@@ -18,7 +18,7 @@ public class Pokeball {
 	@Path("/AddPokeball/{username}")
 	public Response AddPokeBall(@PathParam("username") String username) {
 		String query = "UPDATE USERS SET num_pokeballs=num_pokeballs+1 WHERE username="+username+";";
-		return ServletUtil.updateJSON(query);
+		return ServletUtil.buildResponse(query);
 	}
 	
 	// decrements #poke-balls allocated to user
@@ -26,6 +26,6 @@ public class Pokeball {
 	@Path("/UsedPokeball/{username}")
 	public Response UsedPokeball(@PathParam("username") String username) {
 		String query = "UPDATE USERS SET num_pokeballs=num_pokeballs-1 WHERE username="+username+";";
-		return ServletUtil.updateJSON(query);
+		return ServletUtil.buildResponse(query);
 	}
 }

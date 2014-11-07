@@ -24,13 +24,8 @@ public class ServletUtil {
 		}
 	}
 	
-	public static Response updateJSON(String query) {
-		int rs =  MyContext.dbConn.update(query);
-		if (rs != 0) {
-			return Response.status(200).entity(query).build();
-		} else {
-			return null;
-		}
+	public static int updateJSON(String query) {
+		return MyContext.dbConn.update(query);
 	}
 	
 	public static String wrapInString(String value) {
@@ -57,6 +52,25 @@ public class ServletUtil {
 		}
 		
 		return condition.substring(0, condition.lastIndexOf(joiner));
+	}
+	
+	public static Response buildResponse(String query) {
+		int rs =  updateJSON(query);
+		if (rs != 0) {
+			return Response.status(200).entity(query).build();
+		} else {
+			return null;
+		}
+	}
+	
+	public static String buildUserResponse(String username, String query) {
+		int rs =  updateJSON(query);
+		if (rs != 0) {
+			String newQuery = "SELECT * FROM users WHERE users="+wrapInString(username)+";";
+			return getJSON(newQuery);
+		} else {
+			return null;
+		}
 	}
 	
 }

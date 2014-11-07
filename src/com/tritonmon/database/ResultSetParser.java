@@ -39,7 +39,9 @@ public class ResultSetParser {
 	    	}
 	    	rows.add(row);
 	    }
-		
+		if (rows.isEmpty()) {
+			return null;
+		}
 		return rows;
 	}
 	

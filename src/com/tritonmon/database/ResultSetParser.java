@@ -14,7 +14,7 @@ public class ResultSetParser {
 	
 	public static String toJSONString(ResultSet rs) throws SQLException {
 		List<Map<String, Object>> parsed = parse(rs);
-		if (parsed.size() == 0) {
+		if (parsed.isEmpty()) {
 			return "";
 		} else {
 			return MyContext.gson.toJson(parsed);

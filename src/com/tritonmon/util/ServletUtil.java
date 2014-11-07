@@ -18,12 +18,10 @@ public class ServletUtil {
 		
 		String result = "This string isn't being updated...";
 		try {
-			result = ResultSetParser.toJSONString(rs);
+			return ResultSetParser.toJSONString(rs);
 		} catch (SQLException e) {
-			result += "SQLException<br />" + e.toString();
+			return null;
 		}
-		
-		return result;
 	}
 	
 	public static Response updateJSON(String query) {

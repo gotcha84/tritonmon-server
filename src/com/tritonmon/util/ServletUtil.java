@@ -56,7 +56,7 @@ public class ServletUtil {
 	
 	public static Response buildResponse(String query) {
 		int rs =  updateJSON(query);
-		if (rs <= 0) {
+		if (rs > 0) {
 			return Response.status(200).entity(query).build();
 		} else {
 			return null;
@@ -65,7 +65,7 @@ public class ServletUtil {
 	
 	public static String buildUserResponse(String username, String query) {
 		int rs =  updateJSON(query);
-		if (rs <= 0) {
+		if (rs > 0) {
 			String newQuery = "SELECT * FROM users WHERE username="+wrapInString(username)+";";
 			return getJSON(newQuery);
 		} else {

@@ -29,7 +29,7 @@ public class ServletUtil {
 	public static Response updateJSON(String query) {
 		int rs =  MyContext.dbConn.update(query);
 		if (rs != 0) {
-			return Response.status(rs).entity(query).build();
+			return Response.status(200).entity(query).build();
 		} else {
 			return null;
 		}

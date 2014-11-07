@@ -25,7 +25,7 @@ public class CatchingPokemon {
 	@Path("/starter/{username}/{pokemon_id}")
 	public Response AddPokeBall(@PathParam("username") String username, @PathParam("pokemon_id") String pokemon_id) {
 		String query = "INSERT INTO users_pokemon (username, party_id, pokemon_id, nickname, level, xp, status, move1) VALUES ("
-	+username+",1,"+pokemon_id+"Inglebert,5,125,0,0;";
+	+username+",1,"+pokemon_id+"Inglebert,5,125,0,0);";
 		return ServletUtil.updateJSON(query);
 	}
 }

@@ -66,7 +66,7 @@ public class ServletUtil {
 	public static String buildUserResponse(String username, String query) {
 		int rs =  updateJSON(query);
 		if (rs != 0) {
-			String newQuery = "SELECT * FROM users WHERE users="+wrapInString(username)+";";
+			String newQuery = "SELECT * FROM users WHERE username="+wrapInString(username)+";";
 			return getJSON(newQuery);
 		} else {
 			return null;

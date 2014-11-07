@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 import com.tritonmon.util.ServletUtil;
 
-@Path("/Caught")
+@Path("/addpokemon")
 @Produces(MediaType.TEXT_PLAIN)
 public class CatchingPokemon {
 
@@ -21,4 +21,11 @@ public class CatchingPokemon {
 //		return ServletUtil.updateJSON(query);
 //	}
 	
+	@POST
+	@Path("/starter/{username}/{pokemon_id}")
+	public Response AddPokeBall(@PathParam("username") String username, @PathParam("pokemon_id") String pokemon_id) {
+		String query = "INSERT INTO users_pokemon (username, party_id, pokemon_id, nickname, level, xp, status, move1) VALUES ("
+	+username+",1,"+pokemon_id+"Inglebert,5,125,0,0;";
+		return ServletUtil.updateJSON(query);
+	}
 }

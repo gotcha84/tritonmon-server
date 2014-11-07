@@ -14,11 +14,11 @@ public class ResultSetParser {
 	
 	public static String toJSONString(ResultSet rs) throws SQLException {
 		List<Map<String, Object>> parsed = parse(rs);
-		if (parsed.isEmpty()) {
-			return "";
-		} else {
-			return MyContext.gson.toJson(parse(rs));
-		}
+//		if (parsed.isEmpty()) {
+//			return "";
+//		} else {
+			return MyContext.gson.toJson(parsed);
+//		}
 	}
 	
 	public static String toJSONString(List<Map<String, Object>> data) {

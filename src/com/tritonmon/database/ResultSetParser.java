@@ -13,7 +13,12 @@ import com.tritonmon.context.MyContext;
 public class ResultSetParser {
 	
 	public static String toJSONString(ResultSet rs) throws SQLException {
-		return MyContext.gson.toJson(parse(rs));
+		List<Map<String, Object>> parsed = parse(rs);
+		if (parsed == null) {
+			return null;
+		} else {
+			return MyContext.gson.toJson(parsed);
+		}
 	}
 	
 	public static String toJSONString(List<Map<String, Object>> data) {

@@ -71,7 +71,7 @@ public class ServletUtil {
 			String newQuery = "SELECT * FROM users WHERE username="+wrapInString(username)+";";
 			return getJSON(newQuery);
 		} else {
-			return null;
+			return "";
 		}
 	}
 	

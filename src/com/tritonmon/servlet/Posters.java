@@ -40,11 +40,11 @@ public class Posters {
 	
 	// adds new user
 	@POST
-	@Path("/adduser/{username}/{password}/{gender}/{hometown}")
-	public String addNewUser(@PathParam("username") String username, @PathParam("password") String password,
-			@PathParam("gender") String gender, @PathParam("hometown") String hometown) {
-		String query = "INSERT INTO users (username, password, gender, hometown) VALUES("+ServletUtil.wrapInString(username)+","
-			+ServletUtil.wrapInString(password)+","+ServletUtil.wrapInString(gender)+","+ServletUtil.wrapInString(hometown)+");";
+	@Path("/adduser/{username}/{password}/{hometown}")
+	public String addNewUser(@PathParam("username") String username, @PathParam("password") String password, 
+			@PathParam("hometown") String hometown) {
+		String query = "INSERT INTO users (username, password, hometown) VALUES("+ServletUtil.wrapInString(username)+","
+			+ServletUtil.wrapInString(password)+","+ServletUtil.wrapInString(hometown)+");";
 		return ServletUtil.buildUserResponse(username, query);
 	}
 	

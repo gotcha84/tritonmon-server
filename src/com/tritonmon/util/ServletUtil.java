@@ -58,8 +58,10 @@ public class ServletUtil {
 		int rs =  updateJSON(query);
 		if (rs > 0) {
 			return Response.status(200).entity(query).build();
+		} else if (rs == 0) {
+			return Response.status(204).entity(query).build();
 		} else {
-			return null;
+			return Response.status(500).entity(query).build();
 		}
 	}
 	

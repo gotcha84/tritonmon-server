@@ -48,4 +48,11 @@ public class Pokemon {
 		return ServletUtil.getJSON(query);
 	}
 	
+	@GET
+	@Path("/getuser/{username}")
+	public String login(@PathParam("username") String username) {
+		String query = "SELECT * FROM users WHERE username="+ServletUtil.decodeWrap(username)+";";
+		return ServletUtil.getJSON(query);
+	}
+	
 }

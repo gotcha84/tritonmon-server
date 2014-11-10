@@ -1,5 +1,7 @@
 package com.tritonmon.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +13,8 @@ import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
 
 public class ServletUtil {
+	
+	private static final String encoding = "UTF-8";
 	
 	public static String getJSON(String query) {
 		
@@ -30,6 +34,18 @@ public class ServletUtil {
 	
 	public static String wrapInString(String value) {
 		return "\""+value+"\"";
+	}
+	
+	public static String decodeString(String value) {
+		try {
+			return URLDecoder.decode(value, encoding);
+		} catch (UnsupportedEncodingException e) {
+			return "Server: Unsupported encoding " + encoding;
+		}
+	}
+	
+	public static String decodeWrap(String value) {
+		return wrapInString(decodeString(value));
 	}
  
 	public static String parseSetCondition(String column, String value) {

@@ -55,4 +55,18 @@ public class Pokemon {
 		return ServletUtil.getJSON(query);
 	}
 	
+	@GET
+	@Path("/pokemonspecies")
+	public String getPokemonSpecies() {
+		String query = "SELECT * FROM new_pokemon_species;";
+		return ServletUtil.getJSON(query);
+	}
+	
+	@GET
+	@Path("/pokemon")
+	public String getPokemon() {
+		String query = "SELECT * FROM pokemon;";
+		return ServletUtil.getJSON(query);
+	}
+	
 }

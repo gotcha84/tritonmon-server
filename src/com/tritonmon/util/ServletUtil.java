@@ -64,7 +64,7 @@ public class ServletUtil {
 		// handle case where just one or zero column/value
 		String condition = "";
 		for (int i = 0; i < columnList.size(); i++) {
-			condition += columnList.get(i)+"="+valueList.get(i)+joiner;
+			condition += decodeString(columnList.get(i))+"="+decodeString(valueList.get(i))+joiner;
 		}
 		
 		return condition.substring(0, condition.lastIndexOf(joiner));

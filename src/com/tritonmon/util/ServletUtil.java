@@ -87,7 +87,7 @@ public class ServletUtil {
 			String newQuery = "SELECT * FROM users WHERE username="+username+";";
 			return getJSON(newQuery);
 		} else {
-			return query;
+			return new Integer(rs).toString();
 		}
 	}
 	

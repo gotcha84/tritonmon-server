@@ -19,7 +19,7 @@ public class MyContext implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		gson = new GsonBuilder().create();
 		
-//		sshToServer();
+		sshToServer();
 		
 		dbConn = new DBConnection();
 		dbConn.init();

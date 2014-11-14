@@ -71,22 +71,22 @@ public class UsersPokemon {
 				
 				List<Object> pps = new ArrayList<Object>();
 				if (row.containsKey("pp1")) {
-					moves.add(0, row.get("pp1"));
+					pps.add(0, row.get("pp1"));
 					row.remove("pp1");
 				}
 				if (row.containsKey("pp2")) {
-					moves.add(1, row.get("pp2"));
+					pps.add(1, row.get("pp2"));
 					row.remove("pp2");
 				}
 				if (row.containsKey("pp3")) {
-					moves.add(2, row.get("pp3"));
+					pps.add(2, row.get("pp3"));
 					row.remove("pp3");
 				}
 				if (row.containsKey("pp4")) {
-					moves.add(3, row.get("pp4"));
+					pps.add(3, row.get("pp4"));
 					row.remove("pp4");
 				}
-				row.put("pps", moves);
+				row.put("pps", pps);
 			}
 			return MyContext.gson.toJson(parsed);
 		}

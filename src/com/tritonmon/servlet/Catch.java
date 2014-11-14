@@ -11,15 +11,7 @@ import com.tritonmon.util.ServletUtil;
 
 @Path("/addpokemon")
 @Produces(MediaType.TEXT_PLAIN)
-public class CatchingPokemon {
-
-	// increments #poke-balls allocated to user
-//	@POST
-//	@Path("/{username}/{pokemon_id}")
-//	public Response AddPokeBall(@PathParam("username") String username) {
-//		String query = "UPDATE USERS SET num_pokeballs=num_pokeballs+1 WHERE username="+username+";";
-//		return ServletUtil.updateJSON(query);
-//	}
+public class Catch {
 	
 	@POST
 	@Path("/starter/{username}/{pokemon_id}")

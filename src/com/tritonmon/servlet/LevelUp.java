@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 import com.tritonmon.util.ServletUtil;
 
-@Path("/LevelUp")
+@Path("/levelup")
 @Produces(MediaType.TEXT_PLAIN)
 public class LevelUp {
 	

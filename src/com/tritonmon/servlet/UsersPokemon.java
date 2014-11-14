@@ -16,12 +16,13 @@ import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
 
-@Path("")
+@Path("/userspokemon")
 @Produces(MediaType.APPLICATION_JSON)
 public class UsersPokemon {
 	
+	// get users_pokemon currently in party
 	@GET
-	@Path("/userspokemon/party/{username}")
+	@Path("/party/{username}")
 	public String getParty(@PathParam("username") String username) {
 		String query = "SELECT * FROM users_pokemon WHERE" 
 				+ " username=" + ServletUtil.decodeWrap(username)
@@ -29,8 +30,9 @@ public class UsersPokemon {
 		return getUsersPokemonJson(query);
 	}
 	
+	// get all users_pokemon
 	@GET
-	@Path("/userspokemon/{username}")
+	@Path("/{username}")
 	public String getAll(@PathParam("username") String username) {
 		String query = "SELECT * FROM users_pokemon WHERE username=" + ServletUtil.decodeWrap(username);
 		return getUsersPokemonJson(query);

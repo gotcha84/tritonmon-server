@@ -30,7 +30,7 @@ public class Catch {
 		List<String> ppParts = Lists.newArrayList(pps.split(","));
 		
 		if (moveParts.size() != ppParts.size()) {
-			return null;
+			return Response.status(404).entity("moves list and PPs list are not same length.").build();
 		}
 		
 		String columns = "";
@@ -77,7 +77,7 @@ public class Catch {
 						", " + ppParts.get(3);
 				break;
 			default:
-				return null;
+				return Response.status(404).entity("moves list has more than 4 moves.").build();
 		}
 		
 		String query = "INSERT INTO users_pokemon "
@@ -94,19 +94,5 @@ public class Catch {
 		
 //		return ServletUtil.buildResponse(query);
 		return Response.status(200).entity(query).build();
-	}
-	
-	private String parseCondition(String column, String value, String joiner) {
-		List<String> columnList = Lists.newArrayList(column.split(","));
-		List<String> valueList = Lists.newArrayList(value.split(","));
-		
-		// if columnList.size() != valueList.size() throw something
-		// handle case where just one or zero column/value
-		String condition = "";
-		for (int i = 0; i < columnList.size(); i++) {
-			condition += decodeString(columnList.get(i))+"="+decodeString(valueList.get(i))+joiner;
-		}
-		
-		return condition.substring(0, condition.lastIndexOf(joiner));
 	}
 }

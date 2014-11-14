@@ -20,7 +20,6 @@ public class ServletUtil {
 		
 		ResultSet rs = MyContext.dbConn.query(query);
 		
-		String result = "This string isn't being updated...";
 		try {
 			return ResultSetParser.toJSONString(rs);
 		} catch (SQLException e) {

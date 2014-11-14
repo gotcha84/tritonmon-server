@@ -31,7 +31,9 @@ public class Generic {
 	// select attribute from table;
 	@GET
 	@Path("/table={table}/attribute={attribute}")
-	public String getAttribute(@PathParam("table") String table, @PathParam("attribute") String attribute) {
+	public String getAttribute(
+			@PathParam("table") String table, 
+			@PathParam("attribute") String attribute) {
 		String query = "SELECT "+attribute+" FROM "+table+";";
 		return ServletUtil.getJSON(query);
 	}
@@ -39,7 +41,9 @@ public class Generic {
 	// select * from table where column = value;
 	@GET
 	@Path("/table={table}/column={column}/value={value}")
-	public String getByColumnValue(@PathParam("table") String table, @PathParam("column") String column, 
+	public String getByColumnValue(
+			@PathParam("table") String table, 
+			@PathParam("column") String column, 
 			@PathParam("value") String value) {
 		String query = "SELECT * FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value)+";";
 		return ServletUtil.getJSON(query);
@@ -48,8 +52,11 @@ public class Generic {
 	// select attribute from table where column = value;
 	@GET
 	@Path("/table={table}/attribute={attribute}/column={column}/value={value}")
-	public String getAttributeByColumnValue(@PathParam("table") String table, @PathParam("attribute") String attribute, 
-			@PathParam("column") String column, @PathParam("value") String value) {
+	public String getAttributeByColumnValue(
+			@PathParam("table") String table, 
+			@PathParam("attribute") String attribute, 
+			@PathParam("column") String column, 
+			@PathParam("value") String value) {
 		String query = "SELECT "+attribute+" FROM "+table+" WHERE "+ServletUtil.parseWhereCondition(column, value)+";";
 		return ServletUtil.getJSON(query);
 	}
@@ -57,7 +64,9 @@ public class Generic {
 	// insert into table values (value);
 	@POST
 	@Path("/insert/table={table}/value={value}")
-	public Response insert(@PathParam("table") String table, @PathParam("value") String value) {
+	public Response insert(
+			@PathParam("table") String table, 
+			@PathParam("value") String value) {
 		String query = "INSERT INTO "+table+" VALUES("+value+");";
 		return ServletUtil.buildResponse(query);
 	}
@@ -65,8 +74,11 @@ public class Generic {
 	// update table set setcolumn = setvalue where column = value;
 	@POST
 	@Path("/update/table={table}/setcolumn={setcolumn}/setvalue={setvalue}/column={column}/value={value}")
-	public Response update(@PathParam("table") String table, @PathParam("setcolumn") String setcolumn, 
-			@PathParam("setvalue") String setvalue, @PathParam("column") String column,
+	public Response update(
+			@PathParam("table") String table, 
+			@PathParam("setcolumn") String setcolumn, 
+			@PathParam("setvalue") String setvalue, 
+			@PathParam("column") String column,
 			@PathParam("value") String value) {
 		String query = "UPDATE "+table+" SET "+ServletUtil.parseSetCondition(setcolumn, setvalue)+" WHERE "+ 
 			ServletUtil.parseWhereCondition(column, value)+";";

@@ -25,7 +25,7 @@ public class ResultSetParser {
 		return MyContext.gson.toJson(data);
 	}
 	
-	private static List<Map<String, Object>> parse(ResultSet rs) throws SQLException {
+	public static List<Map<String, Object>> parse(ResultSet rs) throws SQLException {
 		ResultSetMetaData metadata = rs.getMetaData();
 	    int numColumns = metadata.getColumnCount();
 	    

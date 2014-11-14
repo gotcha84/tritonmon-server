@@ -2,6 +2,9 @@ package com.tritonmon.servlet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -36,10 +39,37 @@ public class UsersPokemon {
 	private String getUsersPokemonJson(String query) {
 		ResultSet rs = MyContext.dbConn.query(query);
 		
+		List<Map<String, Object>> parsed = new ArrayList<Map<String,Object>>();
 		try {
-			return ResultSetParser.toJSONString(rs);
+			parsed = ResultSetParser.parse(rs);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (parsed.isEmpty()) {
 			return null;
+		} else {
+			for (Map<String, Object> row : parsed) {
+				List<Object> moves = new ArrayList<Object>();
+				if (row.containsKey("move1")) {
+					moves.add(0, row.get("move1"));
+					row.remove("move1");
+				}
+				if (row.containsKey("move2")) {
+					moves.add(1, row.get("move2"));
+					row.remove("move2");
+				}
+				if (row.containsKey("move3")) {
+					moves.add(2, row.get("move3"));
+					row.remove("move3");
+				}
+				if (row.containsKey("move4")) {
+					moves.add(3, row.get("move4"));
+					row.remove("move4");
+				}
+				row.put("moves", moves);
+			}
+			return MyContext.gson.toJson(parsed);
 		}
 	}
 	

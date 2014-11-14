@@ -92,7 +92,6 @@ public class Catch {
 				+health
 				+values+");";
 		
-//		return ServletUtil.buildResponse(query);
-		return Response.status(200).entity(query).build();
+		return ServletUtil.buildResponse(query);
 	}
 }

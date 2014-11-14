@@ -83,12 +83,12 @@ public class Catch {
 		String query = "INSERT INTO users_pokemon "
 				+ "(username, slot_num, pokemon_id, nickname, level, xp, health" + columns + ") VALUES "
 				
-				+ "("+ServletUtil.decodeWrap(username)+","
-				+ "0,"
-				+pokemon_id+","
-				+ServletUtil.decodeWrap(nickname)+","
-				+"5,"
-				+"125,"
+				+ "("+ServletUtil.decodeWrap(username)+", "
+				+ "0, "
+				+pokemon_id+", "
+				+ServletUtil.decodeWrap(nickname)+", "
+				+"5, "
+				+"125, "
 				+health
 				+values+");";
 		

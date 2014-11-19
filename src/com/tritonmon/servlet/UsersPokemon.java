@@ -143,7 +143,7 @@ public class UsersPokemon {
 				+ moveString
 				+ ppString
 				+ "WHERE users_pokemon_id="+users_pokemon_id
-				+");";
+				+";";
 		
 		return ServletUtil.buildResponse(query);
 		

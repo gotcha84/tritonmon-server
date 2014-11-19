@@ -32,6 +32,9 @@ public class Catch {
 			return Response.status(404).entity(columnsAndValues.get("error").build());
 		}
 		
+		String columns = columnsAndValues.get("columns");
+		String values = columnsAndValues.get("values");
+		
 		String query = "INSERT INTO users_pokemon "
 				+ "(username, slot_num, pokemon_id, nickname, level, xp, health" + columns + ") VALUES "
 				

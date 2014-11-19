@@ -111,6 +111,9 @@ public class UsersPokemon {
 			return Response.status(404).entity(columnsAndValues.get("error").build());
 		}
 		
+		String columns = columnsAndValues.get("columns");
+		String values = columnsAndValues.get("values");
+		
 		String query = "INSERT INTO users_pokemon "
 				+ "(users_pokemon_id, pokemon_id, level, xp, health" + columns + ") VALUES "
 				

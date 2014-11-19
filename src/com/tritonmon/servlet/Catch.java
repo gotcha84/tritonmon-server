@@ -1,6 +1,7 @@
 package com.tritonmon.servlet;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,10 +27,10 @@ public class Catch {
 			@PathParam("moves") String moves, 
 			@PathParam("pps") String pps) {
 		
-		Map<String, String> columnsAndValues = ServletUtil.parseMovePps(columns, values);
+		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
 		
 		if (columnsAndValues.containsKey("error")) {
-			return Response.status(404).entity(columnsAndValues.get("error").build());
+			return Response.status(404).entity(columnsAndValues.get("error")).build();
 		}
 		
 		String columns = columnsAndValues.get("columns");

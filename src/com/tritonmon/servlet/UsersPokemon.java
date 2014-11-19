@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
@@ -94,21 +96,21 @@ public class UsersPokemon {
 		}
 	}
 	
-	@Post
+	@POST
 	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}")
 	public Response addStarter(
-			@PathParam("users_pokemon_id") String c, 
+			@PathParam("users_pokemon_id") String users_pokemon_id, 
 			@PathParam("pokemon_id") String pokemon_id, 
 			@PathParam("level") String level,
 			@PathParam("xp") String xp,
-			@PathParam("health") String health, 
+			@PathParam("health") String health,
 			@PathParam("moves") String moves, 
 			@PathParam("pps") String pps) {
 		
-		Map<String, String> columnsAndValues = ServletUtil.parseMovePps(columns, values);
+		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
 		
 		if (columnsAndValues.containsKey("error")) {
-			return Response.status(404).entity(columnsAndValues.get("error").build());
+			return Response.status(404).entity(columnsAndValues.get("error")).build();
 		}
 		
 		String columns = columnsAndValues.get("columns");

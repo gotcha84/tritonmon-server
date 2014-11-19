@@ -94,4 +94,35 @@ public class UsersPokemon {
 		}
 	}
 	
+	@Post
+	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}")
+	public Response addStarter(
+			@PathParam("users_pokemon_id") String c, 
+			@PathParam("pokemon_id") String pokemon_id, 
+			@PathParam("level") String level,
+			@PathParam("xp") String xp,
+			@PathParam("health") String health, 
+			@PathParam("moves") String moves, 
+			@PathParam("pps") String pps) {
+		
+		Map<String, String> columnsAndValues = ServletUtil.parseMovePps(columns, values);
+		
+		if (columnsAndValues.containsKey("error")) {
+			return Response.status(404).entity(columnsAndValues.get("error").build());
+		}
+		
+		String query = "INSERT INTO users_pokemon "
+				+ "(users_pokemon_id, pokemon_id, level, xp, health" + columns + ") VALUES "
+				
+				+ "("+ServletUtil.decodeWrap(users_pokemon_id)+", "
+				+pokemon_id+", "
+				+ServletUtil.decodeWrap(level)+", "
+				+health
+				+values+");";
+		
+		return ServletUtil.buildResponse(query);
+		
+		
+	}
+	
 }

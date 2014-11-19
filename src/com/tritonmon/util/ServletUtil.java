@@ -4,10 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
@@ -90,4 +93,61 @@ public class ServletUtil {
 		}
 	}
 	
+	public static Map<String, String> parseMovesPps(String moves, String pps) {
+		List<String> moveParts = Lists.newArrayList(moves.split(","));
+		List<String> ppParts = Lists.newArrayList(pps.split(","));
+		
+		if (moveParts.size() != ppParts.size()) {
+			return ImmutableMap.of("error", "moves list and PPs list are not same length.");
+		}
+		
+		String columns = "";
+		String values = "";
+		switch (moveParts.size()) {
+			case 0:
+				columns = "";
+				values = "";
+				break;
+			case 1:
+				columns = ", move1, pp1";
+				values = ", " + moveParts.get(0) + ", " + ppParts.get(0);
+				break;
+			case 2:
+				columns = ", move1, move2, pp1, pp2";
+				values = ", " + moveParts.get(0) + 
+						", " + moveParts.get(1) + 
+						
+						", " + ppParts.get(0) + 
+						", " + ppParts.get(1); 
+				break;
+			
+			case 3:
+				columns = ", move1, move2, move3, pp1, pp2, pp3";
+				values = ", " + moveParts.get(0) + 
+						", " + moveParts.get(1) + 
+						", " + moveParts.get(2) + 
+						
+						", " + ppParts.get(0) + 
+						", " + ppParts.get(1) + 
+						", " + ppParts.get(2); 
+				break;
+			
+			case 4:
+				columns = ", move1, move2, move3, move4, pp1, pp2, pp3, pp4";
+				values = ", " + moveParts.get(0) + 
+						", " + moveParts.get(1) + 
+						", " + moveParts.get(2) + 
+						", " + moveParts.get(3) + 
+						
+						", " + ppParts.get(0) + 
+						", " + ppParts.get(1) + 
+						", " + ppParts.get(2) + 
+						", " + ppParts.get(3);
+				break;
+			default:
+				return ImmutableMap.of("error", "moves list has more than 4 moves.");
+			
+		}
+		return ImmutableMap.of("columns", columns, "values", values);
+	}
 }

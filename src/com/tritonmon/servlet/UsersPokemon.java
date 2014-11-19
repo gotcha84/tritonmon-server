@@ -131,9 +131,9 @@ public class UsersPokemon {
 		String ppString = "";
 		for (int i = 0; i < moveArr.length; i++) {
 			moveString+="move"+(i+1)+"="+moveArr[i]+", ";
-			ppString+="move"+(i+1)+"="+ppArr[i]+", ";
+			ppString+="pp"+(i+1)+"="+ppArr[i]+", ";
 		}
-		ppString = ppString.substring(0, ppString.lastIndexOf(","));
+		ppString = ppString.substring(0, ppString.lastIndexOf(",")) + " ";
 		
 		String query = "UPDATE users_pokemon SET "
 				+ "pokemon_id="+pokemon_id+", "

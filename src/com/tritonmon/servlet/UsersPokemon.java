@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.common.collect.ImmutableMap;
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
@@ -116,14 +117,33 @@ public class UsersPokemon {
 		String columns = columnsAndValues.get("columns");
 		String values = columnsAndValues.get("values");
 		
-		String query = "INSERT INTO users_pokemon "
-				+ "(users_pokemon_id, pokemon_id, level, xp, health" + columns + ") VALUES "
-				
-				+ "("+ServletUtil.decodeWrap(users_pokemon_id)+", "
-				+pokemon_id+", "
-				+ServletUtil.decodeWrap(level)+", "
-				+health
-				+values+");";
+		String[] moveArr = moves.split(",");
+		String[] ppArr = pps.split(",");
+		
+		if (moveArr.length != ppArr.length) {
+			return Response.status(404).entity("moves list and PPs list are not same length.").build();
+		}
+		if (moveArr.length > 4) {
+			return Response.status(404).entity("moves list has more than 4 moves.").build();
+		}
+		
+		String moveString = "";
+		String ppString = "";
+		for (int i = 0; i < moveArr.length; i++) {
+			moveString+="move"+(i+1)+"="+moveArr[i]+", ";
+			ppString+="move"+(i+1)+"="+ppArr[i]+", ";
+		}
+		ppString = ppString.substring(0, ppString.lastIndexOf(","));
+		
+		String query = "UPDATE users_pokemon SET "
+				+ "pokemon_id="+pokemon_id+", "
+				+ "level="+level+", "
+				+ "xp="+xp+", "
+				+ "health="+health+", "
+				+ moveString
+				+ ppString
+				+ "WHERE users_pokemon_id="+users_pokemon_id
+				+");";
 		
 		return ServletUtil.buildResponse(query);
 		

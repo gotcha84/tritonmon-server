@@ -20,7 +20,7 @@ public class Catch {
 	@POST
 	@Path("/starter/{username}/{pokemon_id}/{nickname}/{health}/moves={moves}/pps={pps}")
 	public Response addStarter(
-			@PathParam("username") String username, 
+			@PathParam("usernam	e") String username, 
 			@PathParam("pokemon_id") String pokemon_id, 
 			@PathParam("nickname") String nickname,
 			@PathParam("health") String health, 

@@ -37,17 +37,56 @@ public class Catch {
 		String values = columnsAndValues.get("values");
 		
 		String query = "INSERT INTO users_pokemon "
-				+ "(username, slot_num, pokemon_id, nickname, level, xp, health" + columns + ") VALUES "
+				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES "
 				
 				+ "("+ServletUtil.decodeWrap(username)+", "
-				+ "0, "
 				+pokemon_id+", "
+				+ "0, "
 				+ServletUtil.decodeWrap(nickname)+", "
 				+"5, "
 				+"125, "
-				+health
+				+health+", "
 				+values+");";
 		
 		return ServletUtil.buildResponse(query);
 	}
+	
+	@POST
+	@Path("/caught/{username}/{pokemon_id}/{slot_num}/{nickname}/{level}/{health}/moves={moves}/pps={pps}")
+	public Response caughtPokemon(
+			@PathParam("username") String username, 
+			@PathParam("pokemon_id") String pokemon_id, 
+			@PathParam("slot_num") String slot_num,
+			@PathParam("nickname") String nickname,
+			@PathParam("level") String level, 
+			@PathParam("health") String health, 
+			@PathParam("moves") String moves, 
+			@PathParam("pps") String pps) {
+		
+		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
+		
+		if (columnsAndValues.containsKey("error")) {
+			return Response.status(404).entity(columnsAndValues.get("error")).build();
+		}
+		
+		String columns = columnsAndValues.get("columns");
+		String values = columnsAndValues.get("values");
+		
+		String xp = new Integer((int) Math.pow(new Integer(level), 3)).toString();
+		
+		String query = "INSERT INTO users_pokemon "
+				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES "
+				
+				+ "("+ServletUtil.decodeWrap(username)+", "
+				+pokemon_id+", "
+				+slot_num+", "
+				+ServletUtil.decodeWrap(nickname)+", "
+				+level+", "
+				+xp+", "
+				+health+", "
+				+values+");";
+		
+		return ServletUtil.buildResponse(query);
+	}
+	
 }

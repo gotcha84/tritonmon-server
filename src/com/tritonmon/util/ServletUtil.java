@@ -109,12 +109,12 @@ public class ServletUtil {
 				values = "";
 				break;
 			case 1:
-				columns = ", move1, pp1";
-				values = ", " + moveParts.get(0) + ", " + ppParts.get(0);
+				columns = "move1, pp1";
+				values = moveParts.get(0) + ", " + ppParts.get(0);
 				break;
 			case 2:
-				columns = ", move1, move2, pp1, pp2";
-				values = ", " + moveParts.get(0) + 
+				columns = "move1, move2, pp1, pp2";
+				values = moveParts.get(0) + 
 						", " + moveParts.get(1) + 
 						
 						", " + ppParts.get(0) + 
@@ -122,8 +122,8 @@ public class ServletUtil {
 				break;
 			
 			case 3:
-				columns = ", move1, move2, move3, pp1, pp2, pp3";
-				values = ", " + moveParts.get(0) + 
+				columns = "move1, move2, move3, pp1, pp2, pp3";
+				values = moveParts.get(0) + 
 						", " + moveParts.get(1) + 
 						", " + moveParts.get(2) + 
 						
@@ -133,8 +133,8 @@ public class ServletUtil {
 				break;
 			
 			case 4:
-				columns = ", move1, move2, move3, move4, pp1, pp2, pp3, pp4";
-				values = ", " + moveParts.get(0) + 
+				columns = "move1, move2, move3, move4, pp1, pp2, pp3, pp4";
+				values = moveParts.get(0) + 
 						", " + moveParts.get(1) + 
 						", " + moveParts.get(2) + 
 						", " + moveParts.get(3) + 

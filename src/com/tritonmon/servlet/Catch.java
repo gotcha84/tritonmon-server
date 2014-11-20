@@ -1,6 +1,5 @@
 package com.tritonmon.servlet;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.POST;
@@ -10,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.common.collect.Lists;
 import com.tritonmon.util.ServletUtil;
 
 @Path("/addpokemon")
@@ -20,7 +18,7 @@ public class Catch {
 	@POST
 	@Path("/starter/{username}/{pokemon_id}/{nickname}/{health}/moves={moves}/pps={pps}")
 	public Response addStarter(
-			@PathParam("usernam	e") String username, 
+			@PathParam("username") String username, 
 			@PathParam("pokemon_id") String pokemon_id, 
 			@PathParam("nickname") String nickname,
 			@PathParam("health") String health, 
@@ -39,9 +37,9 @@ public class Catch {
 		String query = "INSERT INTO users_pokemon "
 				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES ("
 				
-				+ ServletUtil.decodeWrap(username)+", "
-				+ pokemon_id+", "
-				+ "0, "
+				+ServletUtil.decodeWrap(username)+", "
+				+pokemon_id+", "
+				+"0, "
 				+ServletUtil.decodeWrap(nickname)+", "
 				+"5, "
 				+"125, "
@@ -76,9 +74,9 @@ public class Catch {
 //		String xp = new Integer((int) Math.pow(new Integer(level), 3)).toString();
 		
 		String query = "INSERT INTO users_pokemon "
-				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES "
+				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES ("
 				
-				+ "("+ServletUtil.decodeWrap(username)+", "
+				+ServletUtil.decodeWrap(username)+", "
 				+pokemon_id+", "
 				+slot_num+", "
 				+ServletUtil.decodeWrap(nickname)+", "

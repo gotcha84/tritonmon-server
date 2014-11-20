@@ -37,10 +37,10 @@ public class Catch {
 		String values = columnsAndValues.get("values");
 		
 		String query = "INSERT INTO users_pokemon "
-				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES "
+				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES ("
 				
-				+ "("+ServletUtil.decodeWrap(username)+", "
-				+pokemon_id+", "
+				+ ServletUtil.decodeWrap(username)+", "
+				+ pokemon_id+", "
 				+ "0, "
 				+ServletUtil.decodeWrap(nickname)+", "
 				+"5, "

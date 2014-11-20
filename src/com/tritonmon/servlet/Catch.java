@@ -52,13 +52,14 @@ public class Catch {
 	}
 	
 	@POST
-	@Path("/caught/{username}/{pokemon_id}/{slot_num}/{nickname}/{level}/{health}/moves={moves}/pps={pps}")
+	@Path("/caught/{username}/{pokemon_id}/{slot_num}/{nickname}/{level}/{xp}/{health}/moves={moves}/pps={pps}")
 	public Response caughtPokemon(
 			@PathParam("username") String username, 
 			@PathParam("pokemon_id") String pokemon_id, 
 			@PathParam("slot_num") String slot_num,
 			@PathParam("nickname") String nickname,
-			@PathParam("level") String level, 
+			@PathParam("level") String level,
+			@PathParam("xp") String xp,
 			@PathParam("health") String health, 
 			@PathParam("moves") String moves, 
 			@PathParam("pps") String pps) {
@@ -72,7 +73,7 @@ public class Catch {
 		String columns = columnsAndValues.get("columns");
 		String values = columnsAndValues.get("values");
 		
-		String xp = new Integer((int) Math.pow(new Integer(level), 3)).toString();
+//		String xp = new Integer((int) Math.pow(new Integer(level), 3)).toString();
 		
 		String query = "INSERT INTO users_pokemon "
 				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES "

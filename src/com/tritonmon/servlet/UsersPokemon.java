@@ -98,7 +98,7 @@ public class UsersPokemon {
 	}
 	
 	@POST
-	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}")
+	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}/{username}/{numPokeballs}")
 	public Response addStarter(
 			@PathParam("users_pokemon_id") String users_pokemon_id, 
 			@PathParam("pokemon_id") String pokemon_id, 
@@ -106,7 +106,9 @@ public class UsersPokemon {
 			@PathParam("xp") String xp,
 			@PathParam("health") String health,
 			@PathParam("moves") String moves, 
-			@PathParam("pps") String pps) {
+			@PathParam("pps") String pps,
+			@PathParam("username") String username,
+			@PathParam("numPokeballs") String numPokeballs) {
 		
 		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
 		
@@ -135,7 +137,7 @@ public class UsersPokemon {
 		}
 		ppString = ppString.substring(0, ppString.lastIndexOf(",")) + " ";
 		
-		String query = "UPDATE users_pokemon SET "
+		String firstQuery = "UPDATE users_pokemon SET "
 				+ "pokemon_id="+pokemon_id+", "
 				+ "level="+level+", "
 				+ "xp="+xp+", "
@@ -145,9 +147,18 @@ public class UsersPokemon {
 				+ "WHERE users_pokemon_id="+users_pokemon_id
 				+";";
 		
-		return ServletUtil.buildResponse(query);
-		
-		
+		Response firstResult = ServletUtil.buildResponse(firstQuery);
+		if (firstResult.getStatus() != 200) {
+			return firstResult;
+		}
+		else {
+			String secondQuery = "UPDATE users SET "
+				+ "num_pokeballs="+numPokeballs+" "
+				+ "WHERE username="+ServletUtil.decodeWrap(username)
+				+";";
+			Response secondResult = ServletUtil.buildResponse(secondQuery);
+			return secondResult;
+		}
 	}
 	
 }

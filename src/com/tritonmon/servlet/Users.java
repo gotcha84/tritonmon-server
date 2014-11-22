@@ -6,9 +6,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.tritonmon.util.ServletUtil;
 
+
+// should change e path to users imo
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
 public class Users {
@@ -29,5 +32,13 @@ public class Users {
 		String query = "INSERT INTO users (username, password, hometown) VALUES("+ServletUtil.decodeWrap(username)+","
 			+ ServletUtil.wrapInString(password)+","+ServletUtil.decodeWrap(hometown)+");";
 		return ServletUtil.buildUserResponse(ServletUtil.decodeWrap(username), query);
+	}
+	
+	// toggles availability state
+	@POST
+	@Path("/toggleavailable/{available}/{username}")
+	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
+		String query = "UPDATE users (available_for_pvp) VALUES("+available+") WHERE username="+ServletUtil.decodeWrap(username)+";";
+		return ServletUtil.buildResponse(query);
 	}
 }

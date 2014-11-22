@@ -39,7 +39,7 @@ public class Users {
 	@Path("/toggleavailable/{available}/{username}")
 	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
 		String val = available.equals("true") ? "1" : "0";
-		String query = "UPDATE users (available_for_pvp) VALUES("+val+") WHERE username="+ServletUtil.decodeWrap(username)+";";
+		String query = "UPDATE users SET available_for_pvp="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
 		return ServletUtil.buildResponse(query);
 	}
 }

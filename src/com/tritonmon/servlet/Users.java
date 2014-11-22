@@ -40,6 +40,7 @@ public class Users {
 	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
 		String val = available.equals("true") ? "1" : "0";
 		String query = "UPDATE users SET available_for_pvp="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
+		
 		return ServletUtil.buildResponse(query);
 	}
 }

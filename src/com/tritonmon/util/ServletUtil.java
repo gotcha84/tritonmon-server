@@ -160,7 +160,7 @@ public class ServletUtil {
 			List<Map<String, Object>> parsed = ResultSetParser.parse(rs);
 			
 			if (parsed.isEmpty()) {
-				return null;
+				return "";
 			}
 			else {
 				String json = "[";

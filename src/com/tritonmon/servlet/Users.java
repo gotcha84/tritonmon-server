@@ -52,9 +52,9 @@ public class Users {
 	}
 	
 	@GET
-	@Path("/getbestpokemoninfo")
-	public String getBestPokemonInfo() {
-		String query = "SELECT level FROM users_pokemon ORDER BY level DESC LIMIT 6";
+	@Path("/getbestpokemoninfo/{username}")
+	public String getBestPokemonInfo(@PathParam("username") String username) {
+		String query = "SELECT level FROM users_pokemon ORDER BY level DESC LIMIT 6 WHERE username="+ServletUtil.decodeWrap(username)+";";
 		return ServletUtil.getJSON(query);
 	}
 	

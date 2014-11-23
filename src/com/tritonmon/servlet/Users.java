@@ -66,33 +66,5 @@ public class Users {
 		return ServletUtil.getJSON(query);
 	}
 	
-	private String parseAvailableForPvp(String query) {
-		
-		ResultSet rs = MyContext.dbConn.query(query);
-		
-		try {
-			
-			List<Map<String, Object>> parsed = ResultSetParser.parse(rs);
-			
-			if (parsed.isEmpty()) {
-				return null;
-			}
-			else {
-				String json = "[";
-				int i=0;
-				for (Map<String, Object> row : parsed) {
-					json += "\""+row.get("username")+"\"";
-					if (i != parsed.size()-1) {
-						json += ",";
-					}
-					i++;
-				}
-				json += "]";
-				return json;
-			}
-		} catch (SQLException e) {
-			return null;
-		}
-	}
 	
 }

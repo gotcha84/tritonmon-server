@@ -1,5 +1,6 @@
 package com.tritonmon.servlet;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,5 +30,21 @@ public class Challenge {
 		String query = "DELETE FROM challenges WHERE challenger="+ServletUtil.decodeWrap(username1)+" AND challenged="
 			+ ServletUtil.wrapInString(username2)+";";
 		return ServletUtil.buildResponse(query);
+	}
+	
+	@GET
+	@Path("/getchallengers/{username}")
+	public String getChallengers(@PathParam("username") String username) {
+		String query = "SELECT challengers FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username)+";";
+//		return ServletUtil.getJSON(query);
+		return ServletUtil.parseToList(query, "challengers");
+	}
+	
+	@GET
+	@Path("/getchallengings/{username}")
+	public String getChallengings(@PathParam("username") String username) {
+		String query = "SELECT challenged FROM challenges WHERE challengers="+ServletUtil.decodeWrap(username)+";";
+//		return ServletUtil.getJSON(query);
+		return ServletUtil.parseToList(query, "challenged");
 	}
 }

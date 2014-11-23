@@ -35,7 +35,7 @@ public class Challenge {
 	@GET
 	@Path("/getchallengers/{username}")
 	public String getChallengers(@PathParam("username") String username) {
-		String query = "SELECT challengers FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username)+";";
+		String query = "SELECT challenger FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username)+";";
 //		return ServletUtil.getJSON(query);
 		return ServletUtil.parseToList(query, "challengers");
 	}
@@ -43,7 +43,7 @@ public class Challenge {
 	@GET
 	@Path("/getchallengings/{username}")
 	public String getChallengings(@PathParam("username") String username) {
-		String query = "SELECT challenged FROM challenges WHERE challengers="+ServletUtil.decodeWrap(username)+";";
+		String query = "SELECT challenged FROM challenges WHERE challenger="+ServletUtil.decodeWrap(username)+";";
 //		return ServletUtil.getJSON(query);
 		return ServletUtil.parseToList(query, "challenged");
 	}

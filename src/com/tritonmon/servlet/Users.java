@@ -1,5 +1,10 @@
 package com.tritonmon.servlet;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -8,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.tritonmon.context.MyContext;
+import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
 
 
@@ -48,7 +55,7 @@ public class Users {
 	@Path("/getavailableforpvp")
 	public String getAvailableForPvpUserInfo() {
 		String query = "SELECT username FROM users WHERE available_for_pvp=1;";
-		return ServletUtil.getJSON(query);
+		return parseAvailableForPvp(query);
 	}
 	
 	@GET
@@ -58,5 +65,33 @@ public class Users {
 		return ServletUtil.getJSON(query);
 	}
 	
+	private String parseAvailableForPvp(String query) {
+		
+		ResultSet rs = MyContext.dbConn.query(query);
+		
+		try {
+			
+			List<Map<String, Object>> parsed = ResultSetParser.parse(rs);
+			
+			if (parsed.isEmpty()) {
+				return null;
+			}
+			else {
+				String json = "[";
+				int i=0;
+				for (Map<String, Object> row : parsed) {
+					json += row.get("username");
+					if (i != parsed.size()-1) {
+						json += ",";
+					}
+					i++;
+				}
+				json += "]";
+				return json;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 	
 }

@@ -54,8 +54,9 @@ public class Users {
 	@GET
 	@Path("/getavailableforpvp")
 	public String getAvailableForPvpUserInfo() {
-		String query = "SELECT username FROM users WHERE available_for_pvp=1;";
-		return parseAvailableForPvp(query);
+		String query = "SELECT * FROM users WHERE available_for_pvp=1;";
+		return ServletUtil.getJSON(query);
+//		return parseAvailableForPvp(query);
 	}
 	
 	@GET

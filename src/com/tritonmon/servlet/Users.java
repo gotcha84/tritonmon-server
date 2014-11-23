@@ -45,20 +45,16 @@ public class Users {
 	}
 	
 	@GET
-	@Path("/getavailableforpvp}")
+	@Path("/getavailableforpvp")
 	public String getAvailableForPvpUserInfo() {
 		String query = "SELECT username FROM users WHERE available_for_pvp=1;";
-//		String secondQuery = "SELECT level FROM users_pokemon where username="
 		return ServletUtil.getJSON(query);
 	}
 	
 	@GET
 	@Path("/getbestpokemoninfo")
 	public String getBestPokemonInfo() {
-		
-//		ResultSet hihi;
-		String query = "SELECT TOP 5 level FROM users_pokemon ORDER BY level DESC";
-//		String secondQuery = "SELECT level FROM users_pokemon where username="
+		String query = "SELECT level FROM users_pokemon ORDER BY level DESC LIMIT 6";
 		return ServletUtil.getJSON(query);
 	}
 	

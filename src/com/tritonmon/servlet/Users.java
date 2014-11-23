@@ -80,7 +80,7 @@ public class Users {
 				String json = "[";
 				int i=0;
 				for (Map<String, Object> row : parsed) {
-					json += row.get("username");
+					json += "\""+row.get("username")+"\"";
 					if (i != parsed.size()-1) {
 						json += ",";
 					}

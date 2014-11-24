@@ -41,7 +41,7 @@ public class Challenge {
 	@GET
 	@Path("/getchallengers/{username2}")
 	public String getChallengers(@PathParam("username2") String username2) {
-		String query = "SELECT challenger FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username2)+"AND declined=0;";
+		String query = "SELECT challenger FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username2)+" AND declined=0;";
 		return ServletUtil.parseToList(query, "challengers");
 	}
 	
@@ -50,7 +50,7 @@ public class Challenge {
 	@GET
 	@Path("/getchallengings/{username1}")
 	public String getChallengings(@PathParam("username1") String username1) {
-		String query = "SELECT challenged FROM challenges WHERE challenger="+ServletUtil.decodeWrap(username1)+"AND declined=0;";
+		String query = "SELECT challenged FROM challenges WHERE challenger="+ServletUtil.decodeWrap(username1)+" AND declined=0;";
 		return ServletUtil.parseToList(query, "challenged");
 	}
 	
@@ -82,8 +82,8 @@ public class Challenge {
 	
 	// get all unseen declined challenges
 	@GET
-	@Path("/getunseendeclinedchallenges/{username1}")
-	public String getUnseenDeclinedChallenges(@PathParam("username1") String username1) {
+	@Path("/getunseendeclinedgchallengers/{username1}")
+	public String getUnseenDeclinedChallengers(@PathParam("username1") String username1) {
 		String query = "SELECT challenged FROM challenges WHERE challenger"+ServletUtil.decodeWrap(username1)+"AND declined=1 AND seen_decline=0;";
 		return ServletUtil.parseToList(query, "challenged");
 	}

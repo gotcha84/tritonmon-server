@@ -42,7 +42,7 @@ public class Challenge {
 	@Path("/getchallengers/{username2}")
 	public String getChallengers(@PathParam("username2") String username2) {
 		String query = "SELECT challenger FROM challenges WHERE challenged="+ServletUtil.decodeWrap(username2)+" AND declined=0;";
-		return ServletUtil.parseToList(query, "challengers");
+		return ServletUtil.parseToList(query, "challenger");
 	}
 	
 	// maybe get them even if declined?
@@ -82,7 +82,7 @@ public class Challenge {
 	
 	// get all unseen declined challenges
 	@GET
-	@Path("/getunseendeclinedgchallengers/{username1}")
+	@Path("/getunseendeclinedchallengers/{username1}")
 	public String getUnseenDeclinedChallengers(@PathParam("username1") String username1) {
 		String query = "SELECT challenged FROM challenges WHERE challenger"+ServletUtil.decodeWrap(username1)+"AND declined=1 AND seen_decline=0;";
 		return ServletUtil.parseToList(query, "challenged");

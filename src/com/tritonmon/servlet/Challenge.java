@@ -66,8 +66,8 @@ public class Challenge {
 	@POST
 	@Path("/setseenchallenge/{username1}/{username2}")
 	public Response setSeenChallenge(@PathParam("username1") String username1, @PathParam("username2") String username2) {
-		String query = "UPDATE challenges SET seen_challenge=1 WHERE challenger="+ServletUtil.wrapInString(username2)
-				+" AND challenged=" + ServletUtil.wrapInString(username1)+";";
+		String query = "UPDATE challenges SET seen_challenge=1 WHERE challenger="+ServletUtil.wrapInString(username1)
+				+" AND challenged=" + ServletUtil.wrapInString(username2)+";";
 		return ServletUtil.buildResponse(query);
 	}
 	
@@ -75,8 +75,8 @@ public class Challenge {
 	@POST
 	@Path("/setdeclinechallenge/{username1}/{username2}")
 	public Response setDeclineChallenge(@PathParam("username1") String username1, @PathParam("username2") String username2) {
-		String query = "UPDATE challenges SET seen_challenge=1,declined=1 WHERE challenger="+ServletUtil.wrapInString(username2)
-				+" AND challenged=" + ServletUtil.wrapInString(username1)+";";
+		String query = "UPDATE challenges SET seen_challenge=1,declined=1 WHERE challenger="+ServletUtil.wrapInString(username1)
+				+" AND challenged=" + ServletUtil.wrapInString(username2)+";";
 		return ServletUtil.buildResponse(query);
 	}
 	

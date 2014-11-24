@@ -62,6 +62,14 @@ public class Challenge {
 		return ServletUtil.parseToList(query, "challenger");
 	}
 	
+	// get all unseen declined challenges
+	@GET
+	@Path("/getunseendeclinedchallengers/{username1}")
+	public String getUnseenDeclinedChallengers(@PathParam("username1") String username1) {
+		String query = "SELECT challenged FROM challenges WHERE challenger"+ServletUtil.decodeWrap(username1)+" AND declined=1 AND seen_decline=0;";
+		return ServletUtil.parseToList(query, "challenged");
+	}
+	
 	// set a challenge to seen (but not decided)
 	@POST
 	@Path("/setseenchallenge/{username1}/{username2}")
@@ -78,14 +86,6 @@ public class Challenge {
 		String query = "UPDATE challenges SET seen_challenge=1,declined=1 WHERE challenger="+ServletUtil.wrapInString(username1)
 				+" AND challenged=" + ServletUtil.wrapInString(username2)+";";
 		return ServletUtil.buildResponse(query);
-	}
-	
-	// get all unseen declined challenges
-	@GET
-	@Path("/getunseendeclinedchallengers/{username1}")
-	public String getUnseenDeclinedChallengers(@PathParam("username1") String username1) {
-		String query = "SELECT challenged FROM challenges WHERE challenger"+ServletUtil.decodeWrap(username1)+"AND declined=1 AND seen_decline=0;";
-		return ServletUtil.parseToList(query, "challenged");
 	}
 	
 	// sets all seen decline challenges to seen decline

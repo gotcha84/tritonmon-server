@@ -66,7 +66,7 @@ public class Challenge {
 	@GET
 	@Path("/getunseendeclinedchallengers/{username1}")
 	public String getUnseenDeclinedChallengers(@PathParam("username1") String username1) {
-		String query = "SELECT challenged FROM challenges WHERE challenger"+ServletUtil.decodeWrap(username1)+" AND declined=1 AND seen_decline=0;";
+		String query = "SELECT challenged FROM challenges WHERE challenger="+ServletUtil.decodeWrap(username1)+" AND declined=1 AND seen_decline=0;";
 		return ServletUtil.parseToList(query, "challenged");
 	}
 	

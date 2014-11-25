@@ -39,32 +39,6 @@ public class Users {
 		String query = "INSERT INTO users (username, password, hometown) VALUES("+ServletUtil.decodeWrap(username)+","
 			+ ServletUtil.wrapInString(password)+","+ServletUtil.decodeWrap(hometown)+");";
 		return ServletUtil.buildUserResponse(ServletUtil.decodeWrap(username), query);
-	}
-	
-	// toggles availability state
-	@POST
-	@Path("/toggleavailable/{available}/{username}")
-	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
-		String val = available.equals("true") ? "1" : "0";
-		String query = "UPDATE users SET available_for_pvp="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
-		
-		return ServletUtil.buildResponse(query);
-	}
-	
-	@GET
-	@Path("/getavailableforpvp")
-	public String getAvailableForPvpUserInfo() {
-		String query = "SELECT * FROM users WHERE available_for_pvp=1;";
-		return ServletUtil.getJSON(query);
-//		return parseAvailableForPvp(query);
-	}
-	
-	@GET
-	@Path("/getbestpokemoninfo/{username}")
-	public String getBestPokemonInfo(@PathParam("username") String username) {
-		String query = "SELECT * FROM users_pokemon WHERE username="+ServletUtil.decodeWrap(username)+ " ORDER BY level DESC LIMIT 6;";
-		return ServletUtil.getJSON(query);
-	}
-	
+	}	
 	
 }

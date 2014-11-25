@@ -13,8 +13,43 @@ import com.tritonmon.util.ServletUtil;
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
 public class Challenge {
-
-	// username1 is ALWAYS challenger, username is always the challenged
+	
+	
+	// toggles availability state
+	@POST
+	@Path("/toggleavailable/{available}/{username}")
+	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
+		String val = available.equals("true") ? "1" : "0";
+		String query = "UPDATE users SET available_for_pvp="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
+		
+		return ServletUtil.buildResponse(query);
+	}
+	
+	@GET
+	@Path("/getavailableforpvp")
+	public String getAvailableForPvpUserInfo() {
+		String query = "SELECT * FROM users WHERE available_for_pvp=1;";
+		return ServletUtil.getJSON(query);
+//		return parseAvailableForPvp(query);
+	}
+	
+	// Deprecated. dont call this. will work on removing from app
+//	@GET
+//	@Path("/getbestpokemoninfo/{username}")
+//	public String getBestPokemonInfo(@PathParam("username") String username) {
+//		String query = "SELECT * FROM users_pokemon WHERE username="+ServletUtil.decodeWrap(username)+ " ORDER BY level DESC LIMIT 6;";
+//		return ServletUtil.getJSON(query);
+//	}
+		
+	// nvm this is a duplicate
+//	@GET
+//	@Path("/getallpokemoninfo/{username}")
+//	public String getAllPokemonInfo(@PathParam("username") String username) {
+//		String query = "SELECT * FROM users_pokemon WHERE username="+ServletUtil.decodeWrap(username)+";";
+//		return ServletUtil.getJSON(query);
+//	}
+	
+	// username1 is ALWAYS challenger, username2 is always the challenged
 	
 	
 	// initiates username1 challenging username2

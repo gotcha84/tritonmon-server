@@ -54,10 +54,11 @@ public class Trading {
 	
 	// initiates username1 offering a trade to username2
 	@POST
-	@Path("/trade/{username1}/{username2}")
-	public Response trade(@PathParam("username1") String username1, @PathParam("username2") String username2) {
-		String query = "INSERT INTO trades (offerer, lister) VALUES("+ServletUtil.decodeWrap(username1)+","
-			+ ServletUtil.wrapInString(username2)+");";
+	@Path("/trade/{username1}/{pokemon1}/{username2}/{pokemon2}")
+	public Response trade(@PathParam("username1") String username1, @PathParam("pokemon1") String pokemon1, 
+			@PathParam("username2") String username2, @PathParam("pokemon2") String pokemon2) {
+		String query = "INSERT INTO trades (offerer, lister, offerer_users_pokemon_id, lister_users_pokemon_id) VALUES("+ServletUtil.decodeWrap(username1)+","
+			+ ServletUtil.wrapInString(username2) + pokemon1 + "," + pokemon2+");";
 		return ServletUtil.buildResponse(query);
 	}
 	

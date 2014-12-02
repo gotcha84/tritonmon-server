@@ -12,7 +12,7 @@ import com.tritonmon.util.ServletUtil;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
-public class Challenge {
+public class Trading {
 	
 	
 	// toggles availability state
@@ -20,15 +20,15 @@ public class Challenge {
 	@Path("/toggleavailable/{available}/{username}")
 	public Response toggleAvailable(@PathParam("available") String available, @PathParam("username") String username) {
 		String val = available.equals("true") ? "1" : "0";
-		String query = "UPDATE users SET available_for_pvp="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
+		String query = "UPDATE users SET available_for_trading="+val+" WHERE username="+ServletUtil.decodeWrap(username)+";";
 		
 		return ServletUtil.buildResponse(query);
 	}
 	
 	@GET
-	@Path("/getavailableforpvp")
-	public String getAvailableForPvpUserInfo() {
-		String query = "SELECT * FROM users WHERE available_for_pvp=1;";
+	@Path("/getavailablefortrading")
+	public String getAvailableForTradingUserInfo() {
+		String query = "SELECT * FROM users WHERE available_for_trading=1;";
 		return ServletUtil.getJSON(query);
 //		return parseAvailableForPvp(query);
 	}

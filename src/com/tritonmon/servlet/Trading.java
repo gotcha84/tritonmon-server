@@ -52,7 +52,7 @@ public class Trading {
 	// username1 is ALWAYS offerer, username2 is always the lister
 	
 	
-	// initiates username1 challenging username2
+	// initiates username1 offering a trade to username2
 	@POST
 	@Path("/trade/{username1}/{username2}")
 	public Response trade(@PathParam("username1") String username1, @PathParam("username2") String username2) {
@@ -81,9 +81,9 @@ public class Trading {
 	}
 	
 	// maybe get them even if declined?
-	// get all people you've lister
+	// get all people you've offered to
 	@GET
-	@Path("/getchallengings/{username1}")
+	@Path("/getmyoffers/{username1}")
 	public String getChallengings(@PathParam("username1") String username1) {
 		String query = "SELECT lister FROM trades WHERE offerer="+ServletUtil.decodeWrap(username1)+" AND declined=0;";
 		return ServletUtil.parseToList(query, "lister");

@@ -91,7 +91,7 @@ public class Trading {
 	
 	// get all unseen offerers
 	@GET
-	@Path("/getunseenofferers/{username2}")
+	@Path("/getunseentradingin/{username2}")
 	public String getUnseenofferers(@PathParam("username2") String username2) {
 		String query = "SELECT offerer FROM trades WHERE lister="+ServletUtil.decodeWrap(username2)+" AND seen_offer=0;";
 		return ServletUtil.parseToList(query, "offerer");
@@ -99,7 +99,7 @@ public class Trading {
 	
 	// get all unseen declined trades
 	@GET
-	@Path("/getunseendeclinedofferers/{username1}")
+	@Path("/getunseendeclinedtradingin/{username1}")
 	public String getUnseenDeclinedofferers(@PathParam("username1") String username1) {
 		String query = "SELECT lister FROM trades WHERE offerer="+ServletUtil.decodeWrap(username1)+" AND declined=1 AND seen_decline=0;";
 		return ServletUtil.parseToList(query, "lister");

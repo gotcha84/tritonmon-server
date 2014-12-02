@@ -74,7 +74,7 @@ public class Trading {
 	// maybe get them even if declined?
 	// get all not declined offerers
 	@GET
-	@Path("/getofferers/{username2}")
+	@Path("/gettradingin/{username2}")
 	public String getofferers(@PathParam("username2") String username2) {
 		String query = "SELECT offerer FROM trades WHERE lister="+ServletUtil.decodeWrap(username2)+" AND declined=0;";
 		return ServletUtil.parseToList(query, "offerer");
@@ -83,7 +83,7 @@ public class Trading {
 	// maybe get them even if declined?
 	// get all people you've offered to
 	@GET
-	@Path("/getmyoffers/{username1}")
+	@Path("/getofferingout/{username1}")
 	public String getChallengings(@PathParam("username1") String username1) {
 		String query = "SELECT lister FROM trades WHERE offerer="+ServletUtil.decodeWrap(username1)+" AND declined=0;";
 		return ServletUtil.parseToList(query, "lister");

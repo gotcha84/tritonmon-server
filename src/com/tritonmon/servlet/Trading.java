@@ -59,7 +59,7 @@ public class Trading {
 			@PathParam("pokemon1PId") String pokemon1PId, @PathParam("pokemon1Level") String pokemon1Level, 
 			@PathParam("username2") String username2, @PathParam("pokemon2UPId") String pokemon2UPId,
 			@PathParam("pokemon2PId") String pokemon2PId, @PathParam("pokemon2Level") String pokemon2Level) {
-		String query = "INSERT INTO trades (offerer, lister, offerer_users_pokemon_id, "
+		String query = "INSERT INTO trades (offerer, lister, offer_users_pokemon_id, "
 				+ "lister_users_pokemon_id, offer_pokemon_id, lister_pokemon_id, offer_level, lister_level) "
 				+ "VALUES("+ServletUtil.decodeWrap(username1)+","+ ServletUtil.wrapInString(username2) + "," 
 				+ pokemon1UPId + "," + pokemon2UPId + "," + pokemon1PId + "," + pokemon2PId + "," + pokemon1Level + "," + pokemon2Level+");";

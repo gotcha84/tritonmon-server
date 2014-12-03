@@ -139,12 +139,12 @@ public class Trading {
 		result = ServletUtil.getJSON(query);
 		String secondSlotId = result.substring(result.indexOf(":")+1, result.indexOf("}"));
 		
-		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon1+";";
+		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + firstSlotId + " WHERE users_pokemon_id="+pokemon1+";";
 		Response firstResult = ServletUtil.buildResponse(query);
 		if (firstResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return firstResult;
 		}	
-		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + ",slot_num=" + firstSlotId + " WHERE users_pokemon_id="+pokemon2+";";
+		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon2+";";
 		Response secondResult = ServletUtil.buildResponse(query);
 		if (secondResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return secondResult;

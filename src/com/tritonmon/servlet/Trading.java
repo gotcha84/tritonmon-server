@@ -160,35 +160,58 @@ public class Trading {
 		return ServletUtil.buildResponse(query);
 	}
 	
+	
 	// sets all seen decline trades to seen decline
 	@POST
-	@Path("/setseendeclinedtrades/{username1}")
-	public Response setSeenDeclinedTrades(@PathParam("username1") String username1) {
+	@Path("/setseendecisions/{username1}")
+	public Response setSeenDecisions(@PathParam("username1") String username1) {
 		String query = "UPDATE trades SET seen_decline=1 WHERE offerer="+ServletUtil.wrapInString(username1)
-				+" AND declined=1 AND seen_decline=0 ;";
+				+" AND declined=1 AND seen_decline=0;"
+				+ "UPDATE trades SET seen_accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)
+				+" AND accepted=1 AND seen_decline=0;";
 		return ServletUtil.buildResponse(query);
 	}
 	
 	@POST
-	@Path("/removeseendeclinedtrades")
-	public Response removeSeenDeclinedTrades() {
-		String query = "DELETE FROM trades WHERE declined=1 and seen_decline=1;";
+	@Path("/removeseendecisions")
+	public Response removeSeenDecisions() {
+		String query = "DELETE FROM trades WHERE declined=1 and seen_decline=1;"
+				+ "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
 		return ServletUtil.buildResponse(query);
-	}
+	}	
 	
-	// sets all seen decline trades to seen decline
-	@POST
-	@Path("/setseenacceptedtrades/{username1}")
-	public Response setSeenAcceptedTrades(@PathParam("username1") String username1) {
-		String query = "UPDATE trades SET seen_accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)
-				+" AND accepted=1 AND seen_decline=0 ;";
-		return ServletUtil.buildResponse(query);
-	}
 	
-	@POST
-	@Path("/removeseenacceptedtrades")
-	public Response removeSeenAcceptedTrades() {
-		String query = "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
-		return ServletUtil.buildResponse(query);
-	}
+	// btm 4 deprecated
+	
+//	// sets all seen decline trades to seen decline
+//	@POST
+//	@Path("/setseendeclinedtrades/{username1}")
+//	public Response setSeenDeclinedTrades(@PathParam("username1") String username1) {
+//		String query = "UPDATE trades SET seen_decline=1 WHERE offerer="+ServletUtil.wrapInString(username1)
+//				+" AND declined=1 AND seen_decline=0 ;";
+//		return ServletUtil.buildResponse(query);
+//	}
+//	
+//	@POST
+//	@Path("/removeseendeclinedtrades")
+//	public Response removeSeenDeclinedTrades() {
+//		String query = "DELETE FROM trades WHERE declined=1 and seen_decline=1;";
+//		return ServletUtil.buildResponse(query);
+//	}
+//	
+//	// sets all seen decline trades to seen decline
+//	@POST
+//	@Path("/setseenacceptedtrades/{username1}")
+//	public Response setSeenAcceptedTrades(@PathParam("username1") String username1) {
+//		String query = "UPDATE trades SET seen_accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)
+//				+" AND accepted=1 AND seen_decline=0 ;";
+//		return ServletUtil.buildResponse(query);
+//	}
+//	
+//	@POST
+//	@Path("/removeseenacceptedtrades")
+//	public Response removeSeenAcceptedTrades() {
+//		String query = "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
+//		return ServletUtil.buildResponse(query);
+//	}
 }

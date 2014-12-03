@@ -150,7 +150,7 @@ public class Trading {
 			return secondResult;
 		}	
 		query = "UPDATE trades SET seen_offer=1,accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)+" AND lister="+ServletUtil.wrapInString(username2) 
-				+ "AND offerer_users_pokemon_id="+pokemon1+" AND lister_users_pokemon_id="+pokemon2+";";
+				+ "AND offer_users_pokemon_id="+pokemon1+" AND lister_users_pokemon_id="+pokemon2+";";
 		return ServletUtil.buildResponse(query);
 				
 	}
@@ -161,7 +161,7 @@ public class Trading {
 	public Response setSeenTrade(@PathParam("username1") String username1, @PathParam("username2") String username2,
 			@PathParam("pokemon1") String pokemon1, @PathParam("pokemon2") String pokemon2) {
 		String query = "UPDATE trades SET seen_offer=1,declined=1 WHERE offerer="+ServletUtil.wrapInString(username1)
-				+" AND lister=" + ServletUtil.wrapInString(username2)+" AND offerer_users_pokemon_id="+pokemon1
+				+" AND lister=" + ServletUtil.wrapInString(username2)+" AND offer_users_pokemon_id="+pokemon1
 				+" AND lister_users_pokemon_id="+pokemon2+";";
 		return ServletUtil.buildResponse(query);
 	}
@@ -172,7 +172,7 @@ public class Trading {
 	public Response setDeclineTrade(@PathParam("username1") String username1, @PathParam("username2") String username2,
 			@PathParam("pokemon1") String pokemon1, @PathParam("pokemon2") String pokemon2) {
 		String query = "UPDATE trades SET seen_offer=1,declined=1 WHERE offerer="+ServletUtil.wrapInString(username1)
-				+" AND lister=" + ServletUtil.wrapInString(username2)+" AND offerer_users_pokemon_id="+pokemon1
+				+" AND lister=" + ServletUtil.wrapInString(username2)+" AND offer_users_pokemon_id="+pokemon1
 				+" AND lister_users_pokemon_id="+pokemon2+";";
 		return ServletUtil.buildResponse(query);
 	}

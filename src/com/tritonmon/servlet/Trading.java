@@ -81,7 +81,7 @@ public class Trading {
 	// maybe get them even if declined?
 	@GET
 	@Path("/getalltradingin/{username2}")
-	public String getofferers(@PathParam("username2") String username2) {
+	public String getAllTradingIn(@PathParam("username2") String username2) {
 		String query = "SELECT * FROM trades WHERE lister="+ServletUtil.decodeWrap(username2)+";";
 		return ServletUtil.getJSON(query);
 	}
@@ -101,7 +101,7 @@ public class Trading {
 	// get all people you've offered to
 	@GET
 	@Path("/getalloffersout/{username1}")
-	public String getChallengings(@PathParam("username1") String username1) {
+	public String getAllOffersOut(@PathParam("username1") String username1) {
 		String query = "SELECT * FROM trades WHERE offerer="+ServletUtil.decodeWrap(username1)+";";
 		return ServletUtil.getJSON(query);
 	}
@@ -186,7 +186,7 @@ public class Trading {
 			return firstResult;
 		}
 		query = "UPDATE trades SET seen_acceptance=1 WHERE lister="+ServletUtil.wrapInString(username1)
-				+" AND accepted=1 AND seen_decline=0;";
+				+" AND accepted=1 AND seen_acceptance=0;";
 		return ServletUtil.buildResponse(query);
 	}
 	

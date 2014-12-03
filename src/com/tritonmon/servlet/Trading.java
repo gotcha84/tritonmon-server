@@ -168,8 +168,6 @@ public class Trading {
 		return ServletUtil.buildResponse(query);
 	}
 	
-	
-	// sets all seen decline trades to seen decline
 	@POST
 	@Path("/setseendecisions/{username1}")
 	public Response setSeenDecisions(@PathParam("username1") String username1) {
@@ -179,7 +177,7 @@ public class Trading {
 		if (firstResult.getStatus() != 200) {
 			return firstResult;
 		}
-		query = "UPDATE trades SET seen_accepted=1 WHERE lister="+ServletUtil.wrapInString(username1)
+		query = "UPDATE trades SET seen_acceptance=1 WHERE lister="+ServletUtil.wrapInString(username1)
 				+" AND accepted=1 AND seen_decline=0;";
 		return ServletUtil.buildResponse(query);
 	}

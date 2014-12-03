@@ -140,7 +140,7 @@ public class Trading {
 		if (secondResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return secondResult;
 		}	
-		query = "UPDATE trades SET accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)+" AND lister="+ServletUtil.wrapInString(username2) 
+		query = "UPDATE trades SET seen_offer=1,accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)+" AND lister="+ServletUtil.wrapInString(username2) 
 				+ "AND offerer_users_pokemon_id="+pokemon1+" AND lister_users_pokemon_id="+pokemon2+";";
 		return ServletUtil.buildResponse(query);
 				

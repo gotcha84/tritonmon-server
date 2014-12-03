@@ -130,12 +130,17 @@ public class Trading {
 	@Path("/setaccepttrade/{username1}/{pokemon1}/{username2}/{pokemon2}")
 	public Response acceptTrade(@PathParam("username1") String username1, @PathParam("pokemon1") String pokemon1, 
 			@PathParam("username2") String username2, @PathParam("pokemon2") String pokemon2) {
-		String query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + " WHERE users_pokemon_id="+pokemon1+";";
+		String query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon1;
+		String firstSlotId = ServletUtil.getJSON(query);
+		query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon2;
+		String secondSlotId = ServletUtil.getJSON(query);
+		
+		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon1+";";
 		Response firstResult = ServletUtil.buildResponse(query);
 		if (firstResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return firstResult;
 		}	
-		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + " WHERE users_pokemon_id="+pokemon2+";";
+		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + ",slot_num=" + firstSlotId + " WHERE users_pokemon_id="+pokemon2+";";
 		Response secondResult = ServletUtil.buildResponse(query);
 		if (secondResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return secondResult;

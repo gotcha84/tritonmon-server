@@ -58,7 +58,7 @@ public class Trading {
 	public Response trade(@PathParam("username1") String username1, @PathParam("pokemon1") String pokemon1, 
 			@PathParam("username2") String username2, @PathParam("pokemon2") String pokemon2) {
 		String query = "INSERT INTO trades (offerer, lister, offerer_users_pokemon_id, lister_users_pokemon_id) VALUES("+ServletUtil.decodeWrap(username1)+","
-			+ ServletUtil.wrapInString(username2) + pokemon1 + "," + pokemon2+");";
+			+ ServletUtil.wrapInString(username2) + "," + pokemon1 + "," + pokemon2+");";
 		return ServletUtil.buildResponse(query);
 	}
 	

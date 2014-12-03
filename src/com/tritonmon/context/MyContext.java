@@ -31,6 +31,7 @@ public class MyContext implements ServletContextListener {
 		System.out.println("database connection closed");
 	}
 
+	@SuppressWarnings("unused")
 	private void sshToServer() {
 		final String user = "ec2-user";
 		final String password = "tritonmon";

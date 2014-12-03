@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,10 +82,20 @@ public class ServletUtil {
 		}
 	}
 	
-	public static String buildUserResponse(String username, String query) {
+	public static String buildUserResponse(String username, int isFacebook, String query) {
 		int rs =  updateJSON(query);
 		if (rs > 0) {
-			String newQuery = "SELECT * FROM users WHERE username="+username+";";
+			String newQuery = "SELECT * FROM users WHERE username=" + username + " AND is_facebook=" + isFacebook + ";";
+			return getJSON(newQuery);
+		} else {
+			return null;
+		}
+	}
+	
+	public static String buildUserResponse(int usersId, String query) {
+		int rs =  updateJSON(query);
+		if (rs > 0) {
+			String newQuery = "SELECT * FROM users WHERE users_id=" + usersId + ";";
 			return getJSON(newQuery);
 		} else {
 			return null;

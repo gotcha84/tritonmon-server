@@ -1,20 +1,12 @@
 package com.tritonmon.servlet;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.tritonmon.context.MyContext;
-import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
 
 
@@ -26,19 +18,59 @@ public class Users {
 	// get user
 	@GET
 	@Path("/getuser/{username}")
-	public String login(@PathParam("username") String username) {
-		String query = "SELECT * FROM users WHERE username="+ServletUtil.decodeWrap(username)+";";
+	public String getUser(@PathParam("username") String username) {
+		String query = "SELECT * FROM users WHERE username="+ServletUtil.decodeWrap(username)+" AND is_facebook=0;";
+		return ServletUtil.getJSON(query);
+	}
+	
+	// get facebook user
+	@GET
+	@Path("/getfacebookuser/{username}")
+	public String getFacebookUser(@PathParam("username") String username) {
+		String query = "SELECT * FROM users WHERE username="+ServletUtil.wrapInString(username)+" AND is_facebook=1;";
 		return ServletUtil.getJSON(query);
 	}
 	
 	// adds new user
 	@POST
 	@Path("/adduser/{username}/{password}/{hometown}")
-	public String addNewUser(@PathParam("username") String username, @PathParam("password") String password, 
+	public String addUser(
+			@PathParam("username") String username, 
+			@PathParam("password") String password, 
 			@PathParam("hometown") String hometown) {
-		String query = "INSERT INTO users (username, password, hometown) VALUES("+ServletUtil.decodeWrap(username)+","
-			+ ServletUtil.wrapInString(password)+","+ServletUtil.decodeWrap(hometown)+");";
-		return ServletUtil.buildUserResponse(ServletUtil.decodeWrap(username), query);
-	}	
+		String query = "INSERT INTO users ("
+				+ "username"
+				+ ", password"
+				+ ", hometown"
+				
+				+ ") VALUES("
+				
+				+ ServletUtil.decodeWrap(username)
+				+ ", " + ServletUtil.wrapInString(password) 
+				+ ", " + ServletUtil.decodeWrap(hometown) 
+				
+				+ ");";
+		
+		return ServletUtil.buildUserResponse(ServletUtil.decodeWrap(username), 0, query);
+	}
+	
+	// adds new facebook user
+	@POST
+	@Path("/addfacebookuser/{facebook_id}")
+	public String addFacebookUser(
+			@PathParam("facebook_id") String facebookId) {
+		String query = "INSERT INTO users ("
+				+ "username"
+				+ ", is_facebook"
+				
+				+ ") VALUES("
+				
+				+ ServletUtil.wrapInString(facebookId)
+				+ ", 1"  
+				
+				+ ");";
+		
+		return ServletUtil.buildUserResponse(ServletUtil.wrapInString(facebookId), 1, query);
+	}
 	
 }

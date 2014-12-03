@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.common.collect.ImmutableMap;
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
@@ -23,22 +22,125 @@ import com.tritonmon.util.ServletUtil;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsersPokemon {
 	
-	// get users_pokemon currently in party
+	/**
+	 * get users_pokemon currently in party given username
+	 * 
+	 * @deprecated use getPartyFromUsersId
+	 * @param username
+	 * @return
+	 */
 	@GET
-	@Path("/party/{username}")
-	public String getParty(@PathParam("username") String username) {
+	@Path("/party/username={username}")
+	public String getPartyFromUsername(@PathParam("username") String username) {
 		String query = "SELECT * FROM users_pokemon WHERE" 
 				+ " username=" + ServletUtil.decodeWrap(username)
-				+ " slot_num >= 0;";
+				+ " AND slot_num >= 0"
+				+ ";";
 		return getUsersPokemonJson(query);
 	}
 	
-	// get all users_pokemon
+	/**
+	 * get users_pokemon currently in party given users_id
+	 * 
+	 * @param usersId
+	 * @return
+	 */
 	@GET
-	@Path("/{username}")
-	public String getAll(@PathParam("username") String username) {
-		String query = "SELECT * FROM users_pokemon WHERE username=" + ServletUtil.decodeWrap(username);
+	@Path("/party/users_id={users_id}")
+	public String getPartyFromUsersId(@PathParam("users_id") String usersId) {
+		String query = "SELECT * FROM users_pokemon WHERE" 
+				+ " users_id=" + usersId
+				+ " AND slot_num >= 0"
+				+ ";";
 		return getUsersPokemonJson(query);
+	}
+	
+	/**
+	 * get all users_pokemon given username
+	 * 
+	 * @deprecated use getAllFromUsersId
+	 * @param username
+	 * @return
+	 */
+	@GET
+	@Path("/username={username}")
+	public String getAllFromUsername(@PathParam("username") String username) {
+		String query = "SELECT * FROM users_pokemon WHERE username=" + ServletUtil.decodeWrap(username) + ";";
+		return getUsersPokemonJson(query);
+	}
+	
+	/**
+	 * get all users_pokemon given users_id
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@GET
+	@Path("/users_id={users_id}")
+	public String getAllFromUsersId(@PathParam("users_id") String usersId) {
+		String query = "SELECT * FROM users_pokemon WHERE users_id=" + usersId + ";";
+		return getUsersPokemonJson(query);
+	}
+	
+	@POST
+	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}/{username}/{numPokeballs}")
+	public Response addStarter(
+			@PathParam("users_pokemon_id") String users_pokemon_id, 
+			@PathParam("pokemon_id") String pokemon_id, 
+			@PathParam("level") String level,
+			@PathParam("xp") String xp,
+			@PathParam("health") String health,
+			@PathParam("moves") String moves, 
+			@PathParam("pps") String pps,
+			@PathParam("username") String username,
+			@PathParam("numPokeballs") String numPokeballs) {
+		
+		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
+		
+		if (columnsAndValues.containsKey("error")) {
+			return Response.status(404).entity(columnsAndValues.get("error")).build();
+		}
+		
+		String[] moveArr = moves.split(",");
+		String[] ppArr = pps.split(",");
+		
+		if (moveArr.length != ppArr.length) {
+			return Response.status(404).entity("moves list and PPs list are not same length.").build();
+		}
+		if (moveArr.length > 4) {
+			return Response.status(404).entity("moves list has more than 4 moves.").build();
+		}
+		
+		String moveString = "";
+		String ppString = "";
+		for (int i = 0; i < moveArr.length; i++) {
+			moveString+="move"+(i+1)+"="+moveArr[i]+", ";
+			ppString+="pp"+(i+1)+"="+ppArr[i]+", ";
+		}
+		ppString = ppString.substring(0, ppString.lastIndexOf(",")) + " ";
+		
+		String firstQuery = "UPDATE users_pokemon SET "
+				+ "pokemon_id="+pokemon_id+", "
+				+ "level="+level+", "
+				+ "xp="+xp+", "
+				+ "health="+health+", "
+				+ moveString
+				+ ppString
+				+ "WHERE users_pokemon_id="+users_pokemon_id
+				+";";
+		
+		Response firstResult = ServletUtil.buildResponse(firstQuery);
+		if (firstResult.getStatus() != 200) {
+			return firstResult;
+		}
+		else {
+			String secondQuery = "UPDATE users SET "
+				+ "num_pokeballs="+numPokeballs+" "
+				+ "WHERE username="+ServletUtil.decodeWrap(username)
+				+";";
+			Response secondResult = ServletUtil.buildResponse(secondQuery);
+			return secondResult;
+		}
 	}
 	
 	private String getUsersPokemonJson(String query) {
@@ -94,70 +196,6 @@ public class UsersPokemon {
 				row.put("pps", pps);
 			}
 			return MyContext.gson.toJson(parsed);
-		}
-	}
-	
-	@POST
-	@Path("/afterbattle/{users_pokemon_id}/{pokemon_id}/{level}/{xp}/{health}/moves={moves}/pps={pps}/{username}/{numPokeballs}")
-	public Response addStarter(
-			@PathParam("users_pokemon_id") String users_pokemon_id, 
-			@PathParam("pokemon_id") String pokemon_id, 
-			@PathParam("level") String level,
-			@PathParam("xp") String xp,
-			@PathParam("health") String health,
-			@PathParam("moves") String moves, 
-			@PathParam("pps") String pps,
-			@PathParam("username") String username,
-			@PathParam("numPokeballs") String numPokeballs) {
-		
-		Map<String, String> columnsAndValues = ServletUtil.parseMovesPps(moves, pps);
-		
-		if (columnsAndValues.containsKey("error")) {
-			return Response.status(404).entity(columnsAndValues.get("error")).build();
-		}
-		
-		String columns = columnsAndValues.get("columns");
-		String values = columnsAndValues.get("values");
-		
-		String[] moveArr = moves.split(",");
-		String[] ppArr = pps.split(",");
-		
-		if (moveArr.length != ppArr.length) {
-			return Response.status(404).entity("moves list and PPs list are not same length.").build();
-		}
-		if (moveArr.length > 4) {
-			return Response.status(404).entity("moves list has more than 4 moves.").build();
-		}
-		
-		String moveString = "";
-		String ppString = "";
-		for (int i = 0; i < moveArr.length; i++) {
-			moveString+="move"+(i+1)+"="+moveArr[i]+", ";
-			ppString+="pp"+(i+1)+"="+ppArr[i]+", ";
-		}
-		ppString = ppString.substring(0, ppString.lastIndexOf(",")) + " ";
-		
-		String firstQuery = "UPDATE users_pokemon SET "
-				+ "pokemon_id="+pokemon_id+", "
-				+ "level="+level+", "
-				+ "xp="+xp+", "
-				+ "health="+health+", "
-				+ moveString
-				+ ppString
-				+ "WHERE users_pokemon_id="+users_pokemon_id
-				+";";
-		
-		Response firstResult = ServletUtil.buildResponse(firstQuery);
-		if (firstResult.getStatus() != 200) {
-			return firstResult;
-		}
-		else {
-			String secondQuery = "UPDATE users SET "
-				+ "num_pokeballs="+numPokeballs+" "
-				+ "WHERE username="+ServletUtil.decodeWrap(username)
-				+";";
-			Response secondResult = ServletUtil.buildResponse(secondQuery);
-			return secondResult;
 		}
 	}
 	

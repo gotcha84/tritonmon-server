@@ -130,9 +130,17 @@ public class Trading {
 	@Path("/setaccepttrade/{username1}/{pokemon1}/{username2}/{pokemon2}")
 	public Response acceptTrade(@PathParam("username1") String username1, @PathParam("pokemon1") String pokemon1, 
 			@PathParam("username2") String username2, @PathParam("pokemon2") String pokemon2) {
-		String query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + " WHERE users_pokemon_id="+pokemon1+";"
-				+ "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + " WHERE users_pokemon_id="+pokemon2+";"+
-				"UPDATE trades SET accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)+" AND lister="+ServletUtil.wrapInString(username2) 
+		String query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + " WHERE users_pokemon_id="+pokemon1+";";
+		Response firstResult = ServletUtil.buildResponse(query);
+		if (firstResult.getStatus() != 200) {
+			return firstResult;
+		}		
+		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username1) + " WHERE users_pokemon_id="+pokemon2+";";
+		Response secondResult = ServletUtil.buildResponse(query);
+		if (secondResult.getStatus() != 200) {
+			return secondResult;
+		}		
+		query = "UPDATE trades SET accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)+" AND lister="+ServletUtil.wrapInString(username2) 
 				+ "AND offerer_users_pokemon_id="+pokemon1+" AND lister_users_pokemon_id="+pokemon2+";";
 		return ServletUtil.buildResponse(query);
 				
@@ -166,8 +174,12 @@ public class Trading {
 	@Path("/setseendecisions/{username1}")
 	public Response setSeenDecisions(@PathParam("username1") String username1) {
 		String query = "UPDATE trades SET seen_decline=1 WHERE offerer="+ServletUtil.wrapInString(username1)
-				+" AND declined=1 AND seen_decline=0;"
-				+ "UPDATE trades SET seen_accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)
+				+" AND declined=1 AND seen_decline=0;";
+		Response firstResult = ServletUtil.buildResponse(query);
+		if (firstResult.getStatus() != 200) {
+			return firstResult;
+		}
+		query = "UPDATE trades SET seen_accepted=1 WHERE offerer="+ServletUtil.wrapInString(username1)
 				+" AND accepted=1 AND seen_decline=0;";
 		return ServletUtil.buildResponse(query);
 	}
@@ -175,8 +187,12 @@ public class Trading {
 	@POST
 	@Path("/removeseendecisions")
 	public Response removeSeenDecisions() {
-		String query = "DELETE FROM trades WHERE declined=1 and seen_decline=1;"
-				+ "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
+		String query = "DELETE FROM trades WHERE declined=1 and seen_decline=1;";
+		Response firstResult = ServletUtil.buildResponse(query);
+		if (firstResult.getStatus() != 200) {
+			return firstResult;
+		}
+		query = "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
 		return ServletUtil.buildResponse(query);
 	}	
 	

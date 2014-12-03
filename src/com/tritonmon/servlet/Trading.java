@@ -130,13 +130,14 @@ public class Trading {
 	@Path("/setaccepttrade/{username1}/{pokemon1}/{username2}/{pokemon2}")
 	public Response acceptTrade(@PathParam("username1") String username1, @PathParam("pokemon1") String pokemon1, 
 			@PathParam("username2") String username2, @PathParam("pokemon2") String pokemon2) {
+		
+		// shitty hacky way but too bad our demo is in a week
 		String query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon1;
-		String firstSlotId = ServletUtil.getJSON(query);
+		String result = ServletUtil.getJSON(query);
+		String firstSlotId = result.substring(result.indexOf(":"), result.indexOf("}"));
 		query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon2;
-
-		String secondSlotId = ServletUtil.getJSON(query);
-		System.out.println("first slot id: " + firstSlotId);
-		System.out.println("second slot id: " + secondSlotId);
+		result = ServletUtil.getJSON(query);
+		String secondSlotId = result.substring(result.indexOf(":"), result.indexOf("}"));
 		
 		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon1+";";
 		Response firstResult = ServletUtil.buildResponse(query);

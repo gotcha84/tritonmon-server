@@ -179,13 +179,13 @@ public class Trading {
 	@POST
 	@Path("/setseendecisions/{username1}")
 	public Response setSeenDecisions(@PathParam("username1") String username1) {
-		String query = "UPDATE trades SET seen_decline=1 WHERE lister="+ServletUtil.wrapInString(username1)
+		String query = "UPDATE trades SET seen_decline=1 WHERE offerer="+ServletUtil.wrapInString(username1)
 				+" AND declined=1 AND seen_decline=0;";
 		Response firstResult = ServletUtil.buildResponse(query);
 		if (firstResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return firstResult;
 		}
-		query = "UPDATE trades SET seen_acceptance=1 WHERE lister="+ServletUtil.wrapInString(username1)
+		query = "UPDATE trades SET seen_acceptance=1 WHERE offerer="+ServletUtil.wrapInString(username1)
 				+" AND accepted=1 AND seen_acceptance=0;";
 		return ServletUtil.buildResponse(query);
 	}

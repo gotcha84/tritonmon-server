@@ -134,10 +134,10 @@ public class Trading {
 		// shitty hacky way but too bad our demo is in a week
 		String query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon1;
 		String result = ServletUtil.getJSON(query);
-		String firstSlotId = result.substring(result.indexOf(":"), result.indexOf("}"));
+		String firstSlotId = result.substring(result.indexOf(":")+1, result.indexOf("}"));
 		query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon2;
 		result = ServletUtil.getJSON(query);
-		String secondSlotId = result.substring(result.indexOf(":"), result.indexOf("}"));
+		String secondSlotId = result.substring(result.indexOf(":")+1, result.indexOf("}"));
 		
 		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon1+";";
 		Response firstResult = ServletUtil.buildResponse(query);

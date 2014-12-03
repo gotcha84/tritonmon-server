@@ -133,7 +133,10 @@ public class Trading {
 		String query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon1;
 		String firstSlotId = ServletUtil.getJSON(query);
 		query = "SELECT slot_num FROM users_pokemon WHERE users_pokemon_id="+pokemon2;
+
 		String secondSlotId = ServletUtil.getJSON(query);
+		System.out.println("first slot id: " + firstSlotId);
+		System.out.println("second slot id: " + secondSlotId);
 		
 		query = "UPDATE users_pokemon SET username="+ServletUtil.wrapInString(username2) + ",slot_num=" + secondSlotId + " WHERE users_pokemon_id="+pokemon1+";";
 		Response firstResult = ServletUtil.buildResponse(query);

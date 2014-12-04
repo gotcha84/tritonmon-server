@@ -14,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import jersey.repackaged.com.google.common.collect.Lists;
+
 import com.tritonmon.context.MyContext;
 import com.tritonmon.database.ResultSetParser;
 import com.tritonmon.util.ServletUtil;
@@ -141,6 +143,31 @@ public class UsersPokemon {
 			Response secondResult = ServletUtil.buildResponse(secondQuery);
 			return secondResult;
 		}
+	}
+	
+	@POST
+	@Path("/updateparty/users_pokemon_id={users_pokemon_id}/slot_num={slot_num}")
+	public Response updateParty(
+			@PathParam("users_pokemon_id") String usersPokemonId, 
+			@PathParam("slot_num") String slotNum) {
+		
+		List<String> idParts = Lists.newArrayList(usersPokemonId.split(","));
+		List<String> slotNumParts = Lists.newArrayList(slotNum.split(","));
+		
+		if (idParts.size() != slotNumParts.size()) {
+			String message = "users_pokemon_id has " + idParts.size() + " elements but slot_num has " + slotNumParts.size() + " elements.";
+			return Response.status(404).entity(message).build();
+		}
+		
+		for (int i=0; i<idParts.size(); i++) {
+			String query = "UPDATE users_pokemon SET slot_num=" + slotNumParts.get(i) + " WHERE users_pokemon_id=" + idParts.get(i) + ";";
+			Response response = ServletUtil.buildResponse(query);
+			if (response.getStatus() != 200) {
+				return response;
+			}
+		}
+		
+		return Response.status(200).build();
 	}
 	
 	private String getUsersPokemonJson(String query) {

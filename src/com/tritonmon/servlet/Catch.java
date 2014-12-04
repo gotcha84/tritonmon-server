@@ -16,9 +16,9 @@ import com.tritonmon.util.ServletUtil;
 public class Catch {
 	
 	@POST
-	@Path("/starter/{username}/{pokemon_id}/{nickname}/{health}/moves={moves}/pps={pps}")
+	@Path("/starter/{users_id}/{pokemon_id}/{nickname}/{health}/moves={moves}/pps={pps}")
 	public Response addStarter(
-			@PathParam("username") String username, 
+			@PathParam("users_id") String users_id, 
 			@PathParam("pokemon_id") String pokemon_id, 
 			@PathParam("nickname") String nickname,
 			@PathParam("health") String health, 
@@ -35,9 +35,9 @@ public class Catch {
 		String values = columnsAndValues.get("values");
 		
 		String query = "INSERT INTO users_pokemon "
-				+ "(username, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES ("
+				+ "(users_id, pokemon_id, slot_num, nickname, level, xp, health, " + columns + ") VALUES ("
 				
-				+ServletUtil.decodeWrap(username)+", "
+				+users_id+", "
 				+pokemon_id+", "
 				+"0, "
 				+ServletUtil.decodeWrap(nickname)+", "

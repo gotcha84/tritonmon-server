@@ -34,7 +34,8 @@ public class Trading {
 		// return parseAvailableForPvp(query);
 	}
 
-	// users_id1 is ALWAYS offerer_users_id, users_id2 is always the lister_users_id
+	// users_id1 is ALWAYS offerer_users_id, users_id2 is always the
+	// lister_users_id
 
 	// initiates users_id1 offering a trade to users_id2
 	@POST
@@ -50,7 +51,7 @@ public class Trading {
 		String query = "INSERT INTO trades (offerer_users_id, lister_users_id, offer_users_pokemon_id, "
 				+ "lister_users_pokemon_id, offer_pokemon_id, lister_pokemon_id, offer_level, lister_level) "
 				+ "VALUES("
-				+ ServletUtil.decodeWrap(users_id1)
+				+ users_id1
 				+ ","
 				+ users_id2
 				+ ","
@@ -61,7 +62,10 @@ public class Trading {
 				+ pokemon1PId
 				+ ","
 				+ pokemon2PId
-				+ "," + pokemon1Level + "," + pokemon2Level + ");";
+				+ ","
+				+ pokemon1Level
+				+ ","
+				+ pokemon2Level + ");";
 		return ServletUtil.buildResponse(query);
 	}
 
@@ -104,24 +108,24 @@ public class Trading {
 		String secondSlotId = result.substring(result.indexOf(":") + 1,
 				result.indexOf("}"));
 
-		query = "UPDATE users_pokemon SET users_id="
-				+ users_id2 + ",slot_num="
+		query = "UPDATE users_pokemon SET users_id=" + users_id2 + ",slot_num="
 				+ secondSlotId + " WHERE users_pokemon_id=" + pokemon1 + ";";
 		Response firstResult = ServletUtil.buildResponse(query);
 		if (firstResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return firstResult;
 		}
-		query = "UPDATE users_pokemon SET users_id="
-				+ users_id1 + ",slot_num="
+		query = "UPDATE users_pokemon SET users_id=" + users_id1 + ",slot_num="
 				+ firstSlotId + " WHERE users_pokemon_id=" + pokemon2 + ";";
 		Response secondResult = ServletUtil.buildResponse(query);
 		if (secondResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return secondResult;
 		}
 		query = "UPDATE trades SET seen_offer=1,accepted=1 WHERE offerer_users_id="
-				+ users_id1 + " AND lister_users_id="
+				+ users_id1
+				+ " AND lister_users_id="
 				+ users_id2
-				+ "AND offer_users_pokemon_id=" + pokemon1
+				+ "AND offer_users_pokemon_id="
+				+ pokemon1
 				+ " AND lister_users_pokemon_id=" + pokemon2 + ";";
 		return ServletUtil.buildResponse(query);
 
@@ -165,15 +169,13 @@ public class Trading {
 	@Path("/setseendecisions/{users_id1}")
 	public Response setSeenDecisions(@PathParam("users_id1") String users_id1) {
 		String query = "UPDATE trades SET seen_decline=1 WHERE offerer_users_id="
-				+ users_id1
-				+ " AND declined=1 AND seen_decline=0;";
+				+ users_id1 + " AND declined=1 AND seen_decline=0;";
 		Response firstResult = ServletUtil.buildResponse(query);
 		if (firstResult.getStatus() != 200 && firstResult.getStatus() != 204) {
 			return firstResult;
 		}
 		query = "UPDATE trades SET seen_acceptance=1 WHERE offerer_users_id="
-				+ users_id1
-				+ " AND accepted=1 AND seen_acceptance=0;";
+				+ users_id1 + " AND accepted=1 AND seen_acceptance=0;";
 		return ServletUtil.buildResponse(query);
 	}
 

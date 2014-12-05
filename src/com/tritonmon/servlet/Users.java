@@ -73,4 +73,12 @@ public class Users {
 		return ServletUtil.buildUserResponse(ServletUtil.wrapInString(facebookId), 1, query);
 	}
 	
+	// get all users
+	@GET
+	@Path("/getallusers")
+	public String getAllUsers() {
+		String query = "SELECT * FROM users WHERE 1=1;";
+		return ServletUtil.getJSON(query);
+	}
+	
 }

@@ -170,6 +170,31 @@ public class UsersPokemon {
 		return Response.status(200).build();
 	}
 	
+	@POST
+	@Path("/heal/users_pokemon_id={users_pokemon_id}/health={health}")
+	public Response heal(
+			@PathParam("users_pokemon_id") String usersPokemonId,
+			@PathParam("health") String health) {
+	
+		List<String> idParts = Lists.newArrayList(usersPokemonId.split(","));
+		List<String> healthParts = Lists.newArrayList(health.split(","));
+		
+		if (idParts.size() != healthParts.size()) {
+			String message = "users_pokemon_id has " + idParts.size() + " elements but health has " + healthParts.size() + " elements.";
+			return Response.status(404).entity(message).build();
+		}
+		
+		for (int i=0; i<idParts.size(); i++) {
+			String query = "UPDATE users_pokemon SET health = " + healthParts.get(i) + " WHERE users_pokemon_id = " + idParts.get(i) + ";";
+			Response response = ServletUtil.buildResponse(query);
+			if (response.getStatus() != 200) {
+				return response;
+			}
+		}
+		
+		return Response.status(200).build();
+	}
+	
 	private String getUsersPokemonJson(String query) {
 		ResultSet rs = MyContext.dbConn.query(query);
 		

@@ -133,10 +133,10 @@ public class Trading {
 
 	// set a trade to seen (but not decided)
 	@POST
-	@Path("/setseentrade/{users_id1}/{users_id2}/{pokemon1}/{pokemon2}")
+	@Path("/setseentrade/{users_id1}/{pokemon1}/{users_id2}/{pokemon2}")
 	public Response setSeenTrade(@PathParam("users_id1") String users_id1,
-			@PathParam("users_id2") String users_id2,
 			@PathParam("pokemon1") String pokemon1,
+			@PathParam("users_id2") String users_id2,
 			@PathParam("pokemon2") String pokemon2) {
 		String query = "UPDATE trades SET seen_offer=1 WHERE offerer_users_id="
 				+ users_id1
@@ -150,10 +150,10 @@ public class Trading {
 
 	// set a trade to be declined (but not seen the decline yet)
 	@POST
-	@Path("/setdeclinetrade/{users_id1}/{users_id2}/{pokemon1}/{pokemon2}")
+	@Path("/setdeclinetrade/{users_id1}/{pokemon1}/{users_id2}/{pokemon2}")
 	public Response setDeclineTrade(@PathParam("users_id1") String users_id1,
-			@PathParam("users_id2") String users_id2,
 			@PathParam("pokemon1") String pokemon1,
+			@PathParam("users_id2") String users_id2,
 			@PathParam("pokemon2") String pokemon2) {
 		String query = "UPDATE trades SET seen_offer=1,declined=1 WHERE offerer_users_id="
 				+ users_id1

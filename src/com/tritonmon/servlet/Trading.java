@@ -138,7 +138,7 @@ public class Trading {
 			@PathParam("users_id2") String users_id2,
 			@PathParam("pokemon1") String pokemon1,
 			@PathParam("pokemon2") String pokemon2) {
-		String query = "UPDATE trades SET seen_offer=1,declined=1 WHERE offerer_users_id="
+		String query = "UPDATE trades SET seen_offer=1 WHERE offerer_users_id="
 				+ users_id1
 				+ " AND lister_users_id="
 				+ users_id2

@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.tritonmon.util.ServletUtil;
 
@@ -79,6 +80,14 @@ public class Users {
 	public String getAllUsers() {
 		String query = "SELECT * FROM users WHERE 1=1;";
 		return ServletUtil.getJSON(query);
+	}
+	
+	@POST
+	@Path("/pokeballs/users_id={users_id}")
+	public Response restockPokeballs(
+			@PathParam("users_id") String usersId) {
+		String query = "UPDATE users SET num_pokeballs = 10 WHERE users_id = " + usersId + ";";
+		return ServletUtil.buildResponse(query);
 	}
 	
 }

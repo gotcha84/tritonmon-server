@@ -27,6 +27,21 @@ public class UsersPokemon {
 	/**
 	 * get users_pokemon currently in party given username
 	 * 
+	 * @param username
+	 * @return
+	 */
+	@GET
+	@Path("/users_pokemon_id={users_pokemon_id}")
+	public String getUsersPokemonByUsersPokemonId(@PathParam("users_pokemon_id") String users_pokemon_id) {
+		String query = "SELECT * FROM users_pokemon WHERE" 
+				+ " users_pokemon_id=" + users_pokemon_id
+				+ ";";
+		return getUsersPokemonJson(query);
+	}
+	
+	/**
+	 * get users_pokemon currently in party given username
+	 * 
 	 * @deprecated use getPartyFromUsersId
 	 * @param username
 	 * @return

@@ -69,8 +69,8 @@ public class Users {
 				+ ") VALUES("
 				
 				+ ServletUtil.wrapInString(facebookId)
+				+ ", 1" 
 				+ ", " + ServletUtil.decodeWrap(facebookName)
-				+ ", 1"  
 				
 				+ ");";
 		

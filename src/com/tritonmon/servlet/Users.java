@@ -26,9 +26,9 @@ public class Users {
 	
 	// get facebook user
 	@GET
-	@Path("/getfacebookuser/{username}")
-	public String getFacebookUser(@PathParam("username") String username) {
-		String query = "SELECT * FROM users WHERE username="+ServletUtil.wrapInString(username)+" AND is_facebook=1;";
+	@Path("/getfacebookuser/{facebook_id}")
+	public String getFacebookUser(@PathParam("facebook_id") String facebookId) {
+		String query = "SELECT * FROM users WHERE username="+ServletUtil.wrapInString(facebookId)+" AND is_facebook=1;";
 		return ServletUtil.getJSON(query);
 	}
 	
@@ -57,17 +57,20 @@ public class Users {
 	
 	// adds new facebook user
 	@POST
-	@Path("/addfacebookuser/{facebook_id}")
+	@Path("/addfacebookuser/{facebook_id}/{facebook_name}")
 	public String addFacebookUser(
-			@PathParam("facebook_id") String facebookId) {
+			@PathParam("facebook_id") String facebookId,
+			@PathParam("facebook_name") String facebookName) {
 		String query = "INSERT INTO users ("
 				+ "username"
 				+ ", is_facebook"
+				+ ", facebook_name"
 				
 				+ ") VALUES("
 				
 				+ ServletUtil.wrapInString(facebookId)
-				+ ", 1"  
+				+ ", 1" 
+				+ ", " + ServletUtil.decodeWrap(facebookName)
 				
 				+ ");";
 		

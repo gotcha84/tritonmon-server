@@ -90,4 +90,12 @@ public class Users {
 		return ServletUtil.buildResponse(query);
 	}
 	
+	@POST
+	@Path("/changeavatar/users_id={users_id}/avatar={avatar}")
+	public Response changeAvatar(
+			@PathParam("users_id") String usersId, @PathParam("avatar") String avatar) {
+		String query = "UPDATE users SET avatar = " + ServletUtil.wrapInString(avatar) + " WHERE users_id = " + usersId + ";";
+		return ServletUtil.buildResponse(query);
+	}
+	
 }

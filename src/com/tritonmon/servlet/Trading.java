@@ -190,5 +190,39 @@ public class Trading {
 		query = "DELETE FROM trades WHERE accepted=1 and seen_acceptance=1;";
 		return ServletUtil.buildResponse(query);
 	}
+	
+	@POST
+	@Path("/updatelisterpokemonid/{users_id1}/{pokemon1}/{users_id2}/{pokemon2}/{listerpokemonid}")
+	public Response updateListerPokemon(@PathParam("users_id1") String users_id1,
+			@PathParam("pokemon1UsersId") String pokemon1,
+			@PathParam("users_id2") String users_id2,
+			@PathParam("pokemon2") String pokemon2,
+			@PathParam("listerpokemonid") String listerpokemonid) {
+		String query = "UPDATE trades SET lister_pokemon_id="+listerpokemonid+" WHERE offerer_users_id="
+				+ users_id1
+				+ " AND lister_users_id="
+				+ users_id2
+				+ " AND offer_users_pokemon_id="
+				+ pokemon1
+				+ " AND lister_users_pokemon_id=" + pokemon2 + ";";
+		return ServletUtil.buildResponse(query);
+	}
+	
+	@POST
+	@Path("/updateofferpokemonid/{users_id1}/{pokemon1}/{users_id2}/{pokemon2}/{offerpokemonid}")
+	public Response updateOfferrPokemon(@PathParam("users_id1") String users_id1,
+			@PathParam("pokemon1UsersId") String pokemon1,
+			@PathParam("users_id2") String users_id2,
+			@PathParam("pokemon2") String pokemon2,
+			@PathParam("offerpokemonid") String offerpokemonid) {
+		String query = "UPDATE trades SET offer_pokemon_id="+offerpokemonid+" WHERE offerer_users_id="
+				+ users_id1
+				+ " AND lister_users_id="
+				+ users_id2
+				+ " AND offer_users_pokemon_id="
+				+ pokemon1
+				+ " AND lister_users_pokemon_id=" + pokemon2 + ";";
+		return ServletUtil.buildResponse(query);
+	}
 
 }

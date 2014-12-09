@@ -186,21 +186,28 @@ public class UsersPokemon {
 	}
 	
 	@POST
-	@Path("/heal/users_pokemon_id={users_pokemon_id}/health={health}")
+	@Path("/heal/users_pokemon_id={users_pokemon_id}/health={health}/pp={pp}")
 	public Response heal(
 			@PathParam("users_pokemon_id") String usersPokemonId,
-			@PathParam("health") String health) {
+			@PathParam("health") String health, 
+			@PathParam("pp") String pp) {
 	
 		List<String> idParts = Lists.newArrayList(usersPokemonId.split(","));
 		List<String> healthParts = Lists.newArrayList(health.split(","));
+		List<String> ppParts = Lists.newArrayList(pp.split(","));
 		
 		if (idParts.size() != healthParts.size()) {
-			String message = "users_pokemon_id has " + idParts.size() + " elements but health has " + healthParts.size() + " elements.";
+			String message = "users_pokemon_id has " + idParts.size() + " elements but health has " + healthParts.size() + " elements";
 			return Response.status(404).entity(message).build();
 		}
 		
 		for (int i=0; i<idParts.size(); i++) {
-			String query = "UPDATE users_pokemon SET health = " + healthParts.get(i) + " WHERE users_pokemon_id = " + idParts.get(i) + ";";
+			String query = "UPDATE users_pokemon SET health = " + healthParts.get(i) 
+					+ ", pp1 = " + ppParts.get(4*i)
+					+ ", pp2 = " + ppParts.get(4*i + 1)
+					+ ", pp3 = " + ppParts.get(4*i + 2) 
+					+ ", pp4 = " + ppParts.get(4*i + 3)
+					+ " WHERE users_pokemon_id = " + idParts.get(i) + ";";
 			Response response = ServletUtil.buildResponse(query);
 			if (response.getStatus() != 200) {
 				return response;

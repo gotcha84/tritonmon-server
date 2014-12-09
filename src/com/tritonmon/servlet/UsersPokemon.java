@@ -210,6 +210,16 @@ public class UsersPokemon {
 		return Response.status(200).build();
 	}
 	
+	@POST
+	@Path("/evolve_pokemon/users_pokemon_id={users_pokemon_id}/pokemon_id={pokemon_id}")
+	public Response evolvePokemon(
+			@PathParam("users_pokemon_id") String usersPokemonId,
+			@PathParam("pokemon_id") String pokemon_id) {
+	
+		String query = "UPDATE users_pokemon SET pokemon_id = "+pokemon_id+" WHERE users_pokemon_id = " + usersPokemonId + ";";
+		return ServletUtil.buildResponse(query);
+	}
+	
 	private String getUsersPokemonJson(String query) {
 		ResultSet rs = MyContext.dbConn.query(query);
 		
